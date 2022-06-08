@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       print(e);
     }
-    navigatorKey?.currentState!.popUntil((route) => route.isFirst);
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
 
