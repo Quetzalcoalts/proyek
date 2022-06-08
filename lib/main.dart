@@ -39,67 +39,71 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "Halo",
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.restaurant_menu),
-                Text("Food Recipe"),
-              ],
-            ),
-            backgroundColor: Colors.blueGrey,
-          ),
-          body: Container(
-              padding: EdgeInsets.all(10),
-              child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 5.0,
-                  crossAxisSpacing: 11.0,
-                  childAspectRatio: 0.85,
-                  children: List.generate(nama.length, (index) {
-                    return Container(
-                        child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          // ignore: unnecessary_new
-                          decoration: new BoxDecoration(
-                              color: Theme.of(context).primaryColorLight,
-                              // ignore: prefer_const_literals_to_create_immutables
-                              boxShadow: [
-                                // ignore: prefer_const_constructors
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  spreadRadius: 3,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 3),
-                                )
-                              ]),
-                          child: Container(
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  "${nama[index]['display']['images'][0]}",
-                                  height: 140,
-                                  width: 170,
-                                  fit: BoxFit.cover,
-                                )
-                              ],
-                            ),
-                          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.restaurant_menu),
+            Text("Food Recipe"),
+          ],
+        ),
+        backgroundColor: Colors.blueGrey,
+      ),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: GridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 5.0,
+          crossAxisSpacing: 11.0,
+          childAspectRatio: 0.85,
+          children: List.generate(
+            nama.length,
+            (index) {
+              return Container(
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      // ignore: unnecessary_new
+                      decoration: new BoxDecoration(
+                          color: Theme.of(context).primaryColorLight,
+                          // ignore: prefer_const_literals_to_create_immutables
+                          boxShadow: [
+                            // ignore: prefer_const_constructors
+                            BoxShadow(
+                              color: Colors.grey,
+                              spreadRadius: 3,
+                              blurRadius: 10,
+                              offset: Offset(0, 3),
+                            )
+                          ]),
+                      child: Container(
+                        child: Row(
+                          children: [
+                            Image.network(
+                              "${nama[index]['display']['images'][0]}",
+                              height: 140,
+                              width: 170,
+                              fit: BoxFit.cover,
+                            )
+                          ],
                         ),
-                        Center(
-                            child: Text(
-                          "${nama[index]['display']['displayName']}",
-                          style: TextStyle(fontSize: 15),
-                        ))
-                      ],
-                    ));
-                  }))),
-        ));
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "${nama[index]['display']['displayName']}",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
