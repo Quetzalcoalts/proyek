@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'main.dart';
 
@@ -11,7 +10,6 @@ class detMakanan extends StatefulWidget {
 }
 
 class _detMakananState extends State<detMakanan> {
-  // int id2 = String.parse(id);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
