@@ -4,7 +4,9 @@ import 'main.dart';
 
 class detMakanan extends StatefulWidget {
   final List id;
-  const detMakanan({ Key? key, required this.id}) : super(key: key);
+  final int item_id;
+  const detMakanan({Key? key, required this.id, required this.item_id})
+      : super(key: key);
   @override
   State<detMakanan> createState() => _detMakananState();
 }
@@ -24,16 +26,15 @@ class _detMakananState extends State<detMakanan> {
         backgroundColor: Colors.blueGrey,
       ),
       body: Container(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text("${widget.id[0]['display']['displayName']}")
-              ],
-            )
-          ],
-        )
-      ),
+          child: Column(
+        children: [
+          Row(
+            children: [
+              Text("${widget.id[widget.item_id]['display']['displayName']}")
+            ],
+          )
+        ],
+      )),
     );
   }
 }
