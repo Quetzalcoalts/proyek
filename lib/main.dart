@@ -1,14 +1,96 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:proyekambw/Profile-Page.dart';
 import 'package:proyekambw/detMakanan.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 List nama = [];
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MaterialApp(
-    home: MyApp(),
+    title: "Firebase CRUD",
+    home: MainPage(),
   ));
+}
+
+class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ProfilePage();
+            //return MyApp();
+          } else {
+            return LoginPage();
+          }
+        },
+      ),
+    );
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final email_Controller = TextEditingController();
+  final password_Controller = TextEditingController();
+  void dispose() {
+    email_Controller.dispose();
+    password_Controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: 40),
+          TextField(
+            controller: email_Controller,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecoration(labelText: "Email"),
+          ),
+          SizedBox(height: 40),
+          TextField(
+            controller: password_Controller,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecoration(labelText: "Password"),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                signIn();
+              },
+              child: Text("Sign In"))
+        ],
+      ),
+    );
+  }
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email_Controller.text.trim(),
+        password: password_Controller.text.trim());
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -40,6 +122,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       appBar: AppBar(
         title: Row(
