@@ -8,13 +8,14 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 List nama = [];
-
+final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MaterialApp(
+    navigatorKey: navigatorKey,
     title: "Firebase CRUD",
     home: MainPage(),
   ));
@@ -29,9 +30,23 @@ class MainPage extends StatelessWidget {
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          // if (snapshot.hasData) {
+          //   return ProfilePage();
+          //   //return MyApp();
+          // } else {
+          //   //return LoginPage();
+          // }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text("Something was Wrong"),
+            );
+          } else if (snapshot.hasData) {
             return ProfilePage();
-            //return MyApp();
           } else {
             return LoginPage();
           }
@@ -87,9 +102,21 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email_Controller.text.trim(),
-        password: password_Controller.text.trim());
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email_Controller.text.trim(),
+          password: password_Controller.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+    navigatorKey?.currentState!.popUntil((route) => route.isFirst);
   }
 }
 
