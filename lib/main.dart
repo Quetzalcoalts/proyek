@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:proyekambw/Profile-Page.dart';
 import 'package:proyekambw/detMakanan.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:proyekambw/navbar.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -46,7 +47,7 @@ class MainPage extends StatelessWidget {
               child: Text("Something was Wrong"),
             );
           } else if (snapshot.hasData) {
-            return ProfilePage();
+            return NavBar();
           } else {
             return LoginPage();
           }

@@ -14,11 +14,11 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Scaffold(
+      body: Column(
         children: [
           Container(
             alignment: Alignment.topLeft,
@@ -107,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );
