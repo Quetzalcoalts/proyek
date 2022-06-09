@@ -11,14 +11,14 @@ class Database {
     return tbl_user.snapshots();
   }
 
-  // static Future<void> tambahData({required item_DaftarKTM KTM}) async {
-  //   DocumentReference docref = tblKTM.doc(KTM.itemNomor.toString());
-  //   await docref
-  //       .set(KTM.toJson())
-  //       .whenComplete(() => print(
-  //           "Data Berhasil di Input NRP : ${KTM.itemNRP}, Nama : ${KTM.itemNama}"))
-  //       .catchError((e) => print("e"));
-  // }
+  static Future<void> tambahData({required Profile_User user01}) async {
+    DocumentReference docref = tbl_user.doc(user01.item_Email);
+    await docref
+        .set(user01.toJson())
+        .whenComplete(() => print(
+            "Berhasil Membuat Akun dengan : Nama ${user01.item_Nama}, Alamat : ${user01.item_alamat}, Nomor HP : ${user01.item_noHP}, Saldo : ${user01.item_Saldo}, Email : ${user01.item_Email}, Password : ${user01.item_Password} "))
+        .catchError((e) => print("e"));
+  }
 
   // static Future<void> ubahData({required item_DaftarKTM KTM}) async {
   //   DocumentReference docref = tblKTM.doc(KTM.itemNomor.toString());

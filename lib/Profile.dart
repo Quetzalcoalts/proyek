@@ -20,10 +20,13 @@ class Profile_User {
   });
   Map<String, dynamic> toJson() {
     return {
+      "Id": item_ID,
       "Nama": item_Nama,
       "Alamat": item_alamat,
       "NoHP": item_noHP,
       "Saldo": item_Saldo,
+      "Email": item_Email,
+      "Password": item_Password,
     };
   }
 

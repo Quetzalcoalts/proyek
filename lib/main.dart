@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:proyekambw/Profile-Page.dart';
+import 'package:proyekambw/SignUp-Page.dart';
 import 'package:proyekambw/detMakanan.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:proyekambw/navbar.dart';
@@ -93,10 +94,23 @@ class _LoginPageState extends State<LoginPage> {
             decoration: InputDecoration(labelText: "Password"),
           ),
           ElevatedButton(
+            onPressed: () {
+              signIn();
+            },
+            child: Text("Sign In"),
+          ),
+          ElevatedButton(
               onPressed: () {
-                signIn();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SignUp_Page();
+                    },
+                  ),
+                );
               },
-              child: Text("Sign In"))
+              child: Text("Sign Up"))
         ],
       ),
     );
