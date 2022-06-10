@@ -50,8 +50,16 @@ class _NavBarState extends State<NavBar> {
             ),
           ],
         ),
+        
         appBar: AppBar(
-          title: Text("Navigasi"),
+          backgroundColor: Colors.grey,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios), onPressed: (){},
+          ),
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.search), onPressed: (){},),
+            IconButton(icon: Icon(Icons.shopping_cart_outlined), onPressed: (){},)
+          ],
         ),
         body: IndexedStack(
           index: current_index_navbar,

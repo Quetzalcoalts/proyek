@@ -10,6 +10,8 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 List nama = [];
+List kategori = ["Makan Pagi", "Makan Siang", "Makan Malam"];
+
 final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -136,22 +138,23 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({ Key? key }) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  int selected = 0;
+
   @override
-  void initState() {
+  void initState(){
     super.initState();
     getName();
   }
 
-  getName() async {
-    var url = Uri.https(
-        "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
+  getName() async{
+    var url = Uri.https("yummly2.p.rapidapi.com", "/feeds/list", {"limit":"15", "start":"3"});
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
       'X-RapidAPI-Key': 'e62549d6b6mshb04641adf26a586p1f4c67jsnead451b22fa7'
@@ -164,82 +167,120 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.restaurant_menu),
-            Text("Food Recipe"),
-          ],
-        ),
-        backgroundColor: Colors.blueGrey,
-      ),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: GridView.count(
-          crossAxisCount: 2,
-          mainAxisSpacing: 5.0,
-          crossAxisSpacing: 11.0,
-          childAspectRatio: 0.85,
-          children: List.generate(
-            nama.length,
-            (index) {
-              return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return detMakanan(
-                        id: nama,
-                        item_id: index,
-                      );
-                    }));
-                  },
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          // ignore: unnecessary_new
-                          decoration: new BoxDecoration(
-                              color: Theme.of(context).primaryColorLight,
-                              // ignore: prefer_const_literals_to_create_immutables
-                              boxShadow: [
-                                // ignore: prefer_const_constructors
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  spreadRadius: 3,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 3),
-                                )
-                              ]),
-                          child: Container(
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  "${nama[index]['display']['images'][0]}",
-                                  height: 140,
-                                  width: 170,
-                                  fit: BoxFit.cover,
-                                )
-                              ],
-                            ),
+      return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Icon(Icons.restaurant_menu),
+                Container(
+                  margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Text("Food Recipe",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  )
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(5,10,5,5),
+            child: SizedBox(
+              height: 30,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: kategori.length,
+                itemBuilder: (context, index){
+                  return GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        selected = index;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("${kategori[index]}",
+                          style: TextStyle(fontSize: 15, fontWeight: selected == index? FontWeight.w800 : FontWeight.normal),
                           ),
-                        ),
-                        Center(
-                          child: Text(
-                            "${nama[index]['display']['displayName']}",
-                            style: TextStyle(fontSize: 15),
+                          Container(
+                            margin: EdgeInsets.only(top: 5),
+                            height: 2,
+                            width: 30,
+                            color: selected == index? Colors.grey : Colors.transparent
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: GridView.count(
+                crossAxisCount: 2,
+                mainAxisSpacing: 5.0,
+                crossAxisSpacing: 11.0,
+                childAspectRatio: 0.85,
+                children: List.generate(
+                  nama.length,
+                  (index) {
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return detMakanan(
+                              id: nama,
+                              item_id: index,
+                            );
+                          }));
+                        },
+                        child: Container(
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                // ignore: unnecessary_new
+                                decoration: BoxDecoration(
+                                  border: Border.all(width: 0.5, color: Colors.grey),
+                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      Image.network(
+                                        "${nama[index]['display']['images'][0]}",
+                                        height: 140,
+                                        width: 168,
+                                        fit: BoxFit.cover,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Center(
+                                child: Text(
+                                  "${nama[index]['display']['displayName']}",
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              )
+                            ],
                           ),
                         )
-                      ],
-                    ),
-                  ));
-            },
+                      );
+                  },
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
+        ],
+      ), 
     );
   }
 }
