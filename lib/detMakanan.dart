@@ -16,25 +16,28 @@ class _detMakananState extends State<detMakanan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.restaurant_menu),
-            Text("Food Recipe"),
-          ],
-        ),
-        backgroundColor: Colors.blueGrey,
+        elevation: 0,
+        backgroundColor: Color.fromARGB(255, 4, 162, 241),
       ),
-      body: Container(
-          child: Column(
-        children: [
-          Row(
-            children: [
-              Text("${widget.id[widget.item_id]['display']['displayName']}")
-            ],
-          )
-        ],
-      )),
+      body: 
+      Container(
+        color: Color.fromARGB(255, 4, 162, 241),
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
+                )
+              ),
+              margin: EdgeInsets.only(top: 203),
+              height: 400,
+            )
+          ],
+        )
+      ),
     );
   }
 }
