@@ -235,11 +235,12 @@ class _MyAppState extends State<MyApp> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return detMakanan(
-                              id: nama,
-                              item_id: index,
-                            );
-                          }));
+                              return detMakanan(
+                                id: nama,
+                                item_id: index,
+                              );
+                            })
+                          );
                         },
                         child: Container(
                           child: Column(
