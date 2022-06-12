@@ -50,9 +50,6 @@ class _NavBarState extends State<NavBar> {
             ),
           ],
         ),
-        appBar: AppBar(
-          title: Text("Navigasi"),
-        ),
         body: IndexedStack(
           index: current_index_navbar,
           children: screen_navbar,

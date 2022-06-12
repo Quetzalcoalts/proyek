@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyekambw/dbservices.dart';
 import 'package:proyekambw/main.dart';
-
+import 'package:file_picker/file_picker.dart';
 import 'Profile.dart';
+import 'storage_files.dart';
+import 'package:firebase_storage/firebase_storage.dart'
+    as Firebase_storage_import;
 
 class ProfilePage extends StatefulWidget {
   final Profile_User? dataUser;
@@ -16,10 +19,20 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser!;
+  final Storage storage = Storage();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Profile"),
+          ],
+        ),
+        backgroundColor: Colors.blueGrey,
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: Database.getData(),
         builder: (context, snapshot) {
@@ -36,6 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 String item_Saldo = user_fromfirebase["Saldo"];
                 String item_Email = user_fromfirebase["Email"];
                 String item_Password = user_fromfirebase["Password"];
+
                 // _jumlah = snapshot.data!.docs.length;
                 // return ListTile(
                 //   onTap: () {},
@@ -50,6 +64,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   return Container(
                     child: Column(
                       children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Text("Nama : ${item_Nama}"),
                         const SizedBox(
                           height: 10,
@@ -102,6 +119,97 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             onPressed: () => FirebaseAuth.instance.signOut(),
                           ),
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              setState(() async {
+                                final result = await FilePicker.platform
+                                    .pickFiles(
+                                        allowMultiple: false,
+                                        type: FileType.custom,
+                                        allowedExtensions: ['png']);
+                                if (result == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text("No File Selected")));
+                                  return null;
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text("File Selected")));
+                                }
+                                final path = result.files.single.path!;
+                                final filename = user.email!;
+                                //final fileName = result.files.single.name;
+                                print(path);
+                                // print(fileName);
+                                storage.UploadFile(filename, path)
+                                    .then((value) => print('Done'));
+                              });
+                            },
+                            child: Text("Upload File")),
+                        FutureBuilder(
+                          future: storage.listFiles(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<Firebase_storage_import.ListResult>
+                                  snapshot) {
+                            if (snapshot.connectionState ==
+                                    ConnectionState.done &&
+                                snapshot.hasData) {
+                              return Container(
+                                padding: const EdgeInsets.all(20),
+                                height: 100,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data!.items.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                            snapshot.data!.items[index].name),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+                            if (snapshot.connectionState ==
+                                    ConnectionState.waiting ||
+                                !snapshot.hasData) {
+                              return CircularProgressIndicator();
+                            }
+
+                            return Container();
+                          },
+                        ),
+                        FutureBuilder(
+                          future: storage.downloadURL(user.email.toString()),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState ==
+                                    ConnectionState.done &&
+                                snapshot.hasData) {
+                              return Container(
+                                width: 300,
+                                height: 250,
+                                child: Image.network(
+                                  snapshot.data!,
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            }
+                            if (snapshot.connectionState ==
+                                    ConnectionState.waiting ||
+                                !snapshot.hasData) {
+                              return CircularProgressIndicator();
+                            }
+
+                            return Container();
+                          },
                         ),
                       ],
                     ),
