@@ -43,7 +43,6 @@ class _ProfilePageState extends State<ProfilePage> {
             return ListView.separated(
               itemBuilder: (BuildContext context, int index) {
                 DocumentSnapshot user_fromfirebase = snapshot.data!.docs[index];
-                setState(() {});
 
                 String item_ID = user_fromfirebase["Id"];
                 String item_Nama = user_fromfirebase["Nama"];
@@ -172,6 +171,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               });
                             },
                             child: Text("Upload File")),
+                        ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                storage.listFiles();
+                              });
+                            },
+                            child: Icon(Icons.refresh)),
                         FutureBuilder(
                           future: storage.listFiles(),
                           builder: (BuildContext context,
@@ -192,7 +198,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          snapshot.data!.items[index].delete();
+                                        },
                                         child: Text(
                                             snapshot.data!.items[index].name),
                                       ),
@@ -226,12 +234,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               );
                             }
-                            if (snapshot.connectionState ==
-                                    ConnectionState.waiting ||
-                                !snapshot.hasData) {
-                              return CircularProgressIndicator();
-                            }
-
                             return Container();
                           },
                         ),

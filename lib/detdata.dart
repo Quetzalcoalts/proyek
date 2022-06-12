@@ -144,7 +144,6 @@ class _detDataState extends State<detData> {
                     );
                     Database.ubahData(user01: dt);
                   });
-
                   Navigator.pop(context);
                 },
                 child: Text("Simpan Data"))

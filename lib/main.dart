@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({ Key? key }) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -148,13 +148,14 @@ class _MyAppState extends State<MyApp> {
   int selected = 0;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     getName();
   }
 
-  getName() async{
-    var url = Uri.https("yummly2.p.rapidapi.com", "/feeds/list", {"limit":"15", "start":"3"});
+  getName() async {
+    var url = Uri.https(
+        "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
       'X-RapidAPI-Key': 'e62549d6b6mshb04641adf26a586p1f4c67jsnead451b22fa7'
@@ -167,7 +168,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
+    return Scaffold(
       body: Column(
         children: [
           Container(
@@ -176,48 +177,54 @@ class _MyAppState extends State<MyApp> {
               children: [
                 Icon(Icons.restaurant_menu),
                 Container(
-                  margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  child: Text("Food Recipe",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  )
-                ),
+                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: Text(
+                      "Food Recipe",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    )),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(5,10,5,5),
+            padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
             child: SizedBox(
               height: 30,
               child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: kategori.length,
-                itemBuilder: (context, index){
-                  return GestureDetector(
-                    onTap: (){
-                      setState(() {
-                        selected = index;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("${kategori[index]}",
-                          style: TextStyle(fontSize: 15, fontWeight: selected == index? FontWeight.w800 : FontWeight.normal),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 5),
-                            height: 2,
-                            width: 30,
-                            color: selected == index? Colors.grey : Colors.transparent
-                          )
-                        ],
+                  scrollDirection: Axis.horizontal,
+                  itemCount: kategori.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selected = index;
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${kategori[index]}",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: selected == index
+                                      ? FontWeight.w800
+                                      : FontWeight.normal),
+                            ),
+                            Container(
+                                margin: EdgeInsets.only(top: 5),
+                                height: 2,
+                                width: 30,
+                                color: selected == index
+                                    ? Colors.grey
+                                    : Colors.transparent)
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }
-              ),
+                    );
+                  }),
             ),
           ),
           Expanded(
@@ -235,12 +242,11 @@ class _MyAppState extends State<MyApp> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                              return detMakanan(
-                                id: nama,
-                                item_id: index,
-                              );
-                            })
-                          );
+                            return detMakanan(
+                              id: nama,
+                              item_id: index,
+                            );
+                          }));
                         },
                         child: Container(
                           child: Column(
@@ -249,8 +255,10 @@ class _MyAppState extends State<MyApp> {
                                 padding: EdgeInsets.all(10),
                                 // ignore: unnecessary_new
                                 decoration: BoxDecoration(
-                                  border: Border.all(width: 0.5, color: Colors.grey),
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  border: Border.all(
+                                      width: 0.5, color: Colors.grey),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: Container(
                                   child: Row(
@@ -273,15 +281,14 @@ class _MyAppState extends State<MyApp> {
                               )
                             ],
                           ),
-                        )
-                      );
+                        ));
                   },
                 ),
               ),
             ),
           ),
         ],
-      ), 
+      ),
     );
   }
 }
