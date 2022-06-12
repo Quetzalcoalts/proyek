@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyekambw/dbservices.dart';
+import 'package:proyekambw/detdata.dart';
 import 'package:proyekambw/main.dart';
 import 'package:file_picker/file_picker.dart';
 import 'Profile.dart';
@@ -42,6 +43,8 @@ class _ProfilePageState extends State<ProfilePage> {
             return ListView.separated(
               itemBuilder: (BuildContext context, int index) {
                 DocumentSnapshot user_fromfirebase = snapshot.data!.docs[index];
+                setState(() {});
+
                 String item_ID = user_fromfirebase["Id"];
                 String item_Nama = user_fromfirebase["Nama"];
                 String item_alamat = user_fromfirebase["Alamat"];
@@ -49,7 +52,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 String item_Saldo = user_fromfirebase["Saldo"];
                 String item_Email = user_fromfirebase["Email"];
                 String item_Password = user_fromfirebase["Password"];
-
                 // _jumlah = snapshot.data!.docs.length;
                 // return ListTile(
                 //   onTap: () {},
@@ -120,6 +122,28 @@ class _ProfilePageState extends State<ProfilePage> {
                             onPressed: () => FirebaseAuth.instance.signOut(),
                           ),
                         ),
+                        ElevatedButton(
+                            onPressed: () {
+                              final dtbaru = Profile_User(
+                                item_ID: item_ID,
+                                item_Email: item_Email,
+                                item_Nama: item_Nama,
+                                item_Password: item_Password,
+                                item_Saldo: item_Saldo,
+                                item_alamat: item_alamat,
+                                item_noHP: item_noHP,
+                              );
+                              // Database.ubahData(KTM: dtbaru);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => detData(
+                                    dataDet: dtbaru,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Text("Rubah Data Profile")),
                         ElevatedButton(
                             onPressed: () {
                               setState(() async {
