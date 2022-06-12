@@ -123,24 +123,26 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              final dtbaru = Profile_User(
-                                item_ID: item_ID,
-                                item_Email: item_Email,
-                                item_Nama: item_Nama,
-                                item_Password: item_Password,
-                                item_Saldo: item_Saldo,
-                                item_alamat: item_alamat,
-                                item_noHP: item_noHP,
-                              );
-                              // Database.ubahData(KTM: dtbaru);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => detData(
-                                    dataDet: dtbaru,
+                              setState(() {
+                                final dtbaru = Profile_User(
+                                  item_ID: item_ID,
+                                  item_Email: item_Email,
+                                  item_Nama: item_Nama,
+                                  item_Password: item_Password,
+                                  item_Saldo: item_Saldo,
+                                  item_alamat: item_alamat,
+                                  item_noHP: item_noHP,
+                                );
+                                // Database.ubahData(KTM: dtbaru);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => detData(
+                                      dataDet: dtbaru,
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              });
                             },
                             child: Text("Rubah Data Profile")),
                         ElevatedButton(
