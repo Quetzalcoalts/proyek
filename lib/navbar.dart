@@ -13,9 +13,9 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int current_index_navbar = 0;
   final screen_navbar = [
-    MyApp(),
+    const MyApp(),
     //LoginPage(),
-    ProfilePage(),
+    const ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _NavBarState extends State<NavBar> {
           onTap: (index) => setState(() {
             current_index_navbar = index;
           }),
-          items: [
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
