@@ -1,7 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'main.dart';
+
+int jumlah = 1;
 
 class detMakanan extends StatefulWidget {
   final List id;
@@ -90,7 +94,7 @@ class _detMakananState extends State<detMakanan> {
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               width: 380,
-                              height: 60,
+                              height: 200,
                               child: Card(
                                 elevation: 0,
                                 child: Text("${widget.id[widget.item_id]['content']['description'] != null ? 
@@ -99,6 +103,97 @@ class _detMakananState extends State<detMakanan> {
                                 overflow: TextOverflow.visible,
                                 maxLines: 10,
                                 ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(5, 8, 0, 0),
+                                  width: 40,
+                                  height: 25,
+                                  child: OutlineButton(
+                                    // ignore: prefer_const_constructors
+                                    borderSide: BorderSide(
+                                      width: 0.5,
+                                      color: Colors.grey
+                                    ),
+                                    onPressed: (){
+                                      setState(() {
+                                        if(jumlah > 0){
+                                          jumlah --;
+                                        }
+                                      });
+                                    },
+                                    child: Icon(Icons.remove),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                  child: Text(jumlah.toString())
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                  width: 40,
+                                  height: 25,
+                                  child: OutlineButton(
+                                    // ignore: prefer_const_constructors
+                                    borderSide: BorderSide(
+                                      width: 0.5,
+                                      color: Colors.grey
+                                    ),
+                                    onPressed: (){
+                                      setState(() {
+                                        jumlah ++;
+                                      });
+                                    },
+                                    child: Icon(Icons.add),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.fromLTRB(5, 35, 0, 0),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(8)
+                                    ),
+                                    width: 110,
+                                    height: 50,
+                                    child: FlatButton(
+                                      onPressed: (){}, 
+                                      child: Icon(Icons.shopping_cart)
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 20,
+                                    height: 50,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.greenAccent,
+                                      borderRadius: BorderRadius.circular(8)
+                                    ),
+                                    width: 237,
+                                    height: 50,
+                                    child: FlatButton(
+                                      onPressed: (){}, 
+                                      child: Text("BUY NOW",
+                                      style: TextStyle(fontSize: 17),
+                                      )
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -115,14 +210,3 @@ class _detMakananState extends State<detMakanan> {
     );
   }
 }
-
-// Column(
-// children: [
-//   Row(
-//     mainAxisAlignment: MainAxisAlignment.end,
-//     children: [
-      
-//     ],
-//   ),
-// ],
-// )

@@ -172,7 +172,7 @@ class _MyAppState extends State<MyApp> {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.fromLTRB(10, 35, 0, 0),
             child: Row(
               children: [
                 Icon(Icons.restaurant_menu),
@@ -187,7 +187,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
+            padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
             child: SizedBox(
               height: 30,
               child: ListView.builder(
