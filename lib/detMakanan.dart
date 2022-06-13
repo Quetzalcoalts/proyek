@@ -3,7 +3,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:proyekambw/cart.dart';
 import 'main.dart';
+import 'cart.dart';
 
 int jumlah = 1;
 
@@ -171,7 +173,13 @@ class _detMakananState extends State<detMakanan> {
                                     width: 110,
                                     height: 50,
                                     child: FlatButton(
-                                      onPressed: (){}, 
+                                      onPressed: (){
+                                        Navigator.push(
+                                          context, MaterialPageRoute(builder: (context){
+                                            return Cart(id: widget.id, item_id: widget.item_id);
+                                          })
+                                        );
+                                      }, 
                                       child: Icon(Icons.shopping_cart)
                                     ),
                                   ),
