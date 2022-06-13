@@ -5,6 +5,7 @@ import 'package:proyekambw/dbservices.dart';
 import 'package:proyekambw/detdata.dart';
 import 'package:proyekambw/main.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:proyekambw/widget/profile_widget.dart';
 import 'Profile.dart';
 import 'storage_files.dart';
 import 'package:firebase_storage/firebase_storage.dart'
@@ -65,43 +66,101 @@ class _ProfilePageState extends State<ProfilePage> {
                   return Container(
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 20,
+                        const SizedBox(height: 30),
+                        FutureBuilder(
+                          future: storage.downloadURL(user.email.toString()),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState ==
+                                    ConnectionState.done &&
+                                snapshot.hasData) {
+                              // return Container(
+                              //   width: 300,
+                              //   height: 250,
+                              //   child: Image.network(
+                              //     snapshot.data!,
+                              //     fit: BoxFit.cover,
+                              //   ),
+                              // );
+                              return ProfileWidget(
+                                snapshot: snapshot,
+                                onClicked: () async {
+                                  setState(
+                                    () async {
+                                      storage.listFiles();
+                                    },
+                                  );
+                                  final result = await FilePicker.platform
+                                      .pickFiles(
+                                          allowMultiple: false,
+                                          type: FileType.custom,
+                                          allowedExtensions: ['png']);
+                                  if (result == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text("No File Selected")));
+                                    return null;
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text("File Selected")));
+                                  }
+                                  final path = result.files.single.path!;
+                                  final filename = user.email!;
+                                  //final fileName = result.files.single.name;
+                                  print(path);
+                                  // print(fileName);
+                                  storage.UploadFile(filename, path)
+                                      .then((value) => print('Done'));
+                                },
+                              );
+                            }
+                            return Container();
+                          },
                         ),
-                        Text("Nama : ${item_Nama}"),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text("Alamat : ${item_alamat}"),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text("Nomor HP : ${item_noHP}"),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text("Saldo : ${item_Saldo}"),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text("Email : ${item_Email}"),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text("Password : ${item_Password}"),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          "Signed In as",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          user.email!,
-                          style: const TextStyle(fontSize: 20),
+                        Container(
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text("Nama : ${item_Nama}"),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text("Alamat : ${item_alamat}"),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text("Nomor HP : ${item_noHP}"),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text("Saldo : ${item_Saldo}"),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text("Email : ${item_Email}"),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text("Password : ${item_Password}"),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                "Signed In as",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                user.email!,
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 15),
                         Container(
@@ -217,25 +276,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               return CircularProgressIndicator();
                             }
 
-                            return Container();
-                          },
-                        ),
-                        FutureBuilder(
-                          future: storage.downloadURL(user.email.toString()),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
-                            if (snapshot.connectionState ==
-                                    ConnectionState.done &&
-                                snapshot.hasData) {
-                              return Container(
-                                width: 300,
-                                height: 250,
-                                child: Image.network(
-                                  snapshot.data!,
-                                  fit: BoxFit.cover,
-                                ),
-                              );
-                            }
                             return Container();
                           },
                         ),
