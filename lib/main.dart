@@ -265,7 +265,7 @@ class _MyAppState extends State<MyApp> {
                                     children: [
                                       Image.network(
                                         "${nama[index]['display']['images'][0]}",
-                                        height: 140,
+                                        height: 130,
                                         width: 168,
                                         fit: BoxFit.cover,
                                       )
