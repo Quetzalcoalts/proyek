@@ -11,7 +11,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  int current_index_navbar = 0;
+  int current_index_navbar = 1;
   final screen_navbar = [
     const MyApp(),
     //LoginPage(),

@@ -20,6 +20,7 @@ class _detDataState extends State<detData> {
   final ctrEmail = TextEditingController();
   final ctrPassword = TextEditingController();
   bool _isDisabled = false;
+  bool _isObscure = true;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -51,82 +52,110 @@ class _detDataState extends State<detData> {
     if (widget.dataDet == null) _isDisabled = true;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail Data Notes"),
+        title: const Text("Detail Data Notes"),
       ),
       body: Container(
-        margin: EdgeInsets.all(8),
+        margin: const EdgeInsets.all(20),
         child: Column(
           children: [
-            TextField(
-              controller: ctrID,
-              enabled: _isDisabled,
-              decoration:
-                  InputDecoration(border: OutlineInputBorder(), labelText: ''),
-            ),
-            SizedBox(
-              width: 10,
-              height: 10,
-            ),
+            // TextField(
+            //   controller: ctrID,
+            //   enabled: _isDisabled,
+            //   decoration:
+            //       InputDecoration(border: OutlineInputBorder(), labelText: ''),
+            // ),
+            // SizedBox(
+            //   width: 10,
+            //   height: 10,
+            // ),
             TextField(
               controller: ctrNama,
-              //enabled: _isDisabled,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(), labelText: 'Masukkan Isi Nama'),
+              autofocus: true,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
+                  border: const OutlineInputBorder(),
+                  labelText: 'Masukkan Isi Nama'),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
               height: 10,
             ),
             TextField(
               controller: ctrAlamat,
-              //enabled: _isDisabled,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+              autofocus: false,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.home),
+                  border: const OutlineInputBorder(),
                   labelText: 'Masukkan Isi Alamat'),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
               height: 10,
             ),
             TextField(
               controller: ctrNoHP,
-              //enabled: _isDisabled,
-              decoration: InputDecoration(
+              autofocus: false,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.mobile_friendly),
                   border: OutlineInputBorder(),
                   labelText: 'Masukkan Isi No HP'),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
               height: 10,
             ),
             TextField(
               controller: ctrSaldo,
-              //enabled: _isDisabled,
-              decoration: InputDecoration(
+              autofocus: false,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.money),
                   border: OutlineInputBorder(),
                   labelText: 'Masukkan Isi Saldo'),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
               height: 10,
             ),
             TextField(
               controller: ctrEmail,
+              autofocus: false,
               enabled: _isDisabled,
-              decoration:
-                  InputDecoration(border: OutlineInputBorder(), labelText: ''),
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(
+                  prefixIcon: const Icon(Icons.email),
+                  border: const OutlineInputBorder(),
+                  labelText: 'Your Email Registered'),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
               height: 10,
             ),
             TextField(
-              controller: ctrPassword,
+              controller: ctrEmail,
+              autofocus: false,
+              textCapitalization: TextCapitalization.sentences,
+              obscureText: _isObscure,
               enabled: _isDisabled,
-              decoration:
-                  InputDecoration(border: OutlineInputBorder(), labelText: ''),
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.password),
+                labelText: 'Password',
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      _isObscure ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  },
+                ),
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
               height: 10,
             ),
@@ -146,7 +175,7 @@ class _detDataState extends State<detData> {
                   });
                   Navigator.pop(context);
                 },
-                child: Text("Simpan Data"))
+                child: const Text("Simpan Data"))
           ],
         ),
       ),
