@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:proyekambw/RefreshWidget.dart';
 import 'package:proyekambw/dbservices.dart';
 import 'package:proyekambw/detdata-changeprofile.dart';
+import 'package:proyekambw/history.dart';
 import 'package:proyekambw/main.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:proyekambw/widget/profile_widget.dart';
@@ -30,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
       storage.listFiles();
     });
 
-    return Future.delayed(Duration(seconds: 0));
+    return Future.delayed(Duration(seconds: 400));
   }
 
   @override
@@ -109,7 +110,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                               ]),
-
                           const SizedBox(height: 30),
                           FutureBuilder(
                             future: storage.downloadURL(user.email.toString()),
@@ -276,99 +276,152 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           const SizedBox(
-                            height: 100,
+                            height: 40,
                           ),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.white,
+                                  onPrimary: Colors.blue,
+                                  shadowColor: Colors.blueAccent,
+                                  elevation: 5),
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return History();
+                                }));
+                              },
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        flex: 5,
+                                        child: Row(
+                                          children: const [
+                                            Expanded(
+                                              flex: 1,
+                                              child: Icon(
+                                                Icons.history,
+                                                size: 20.0,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 5,
+                                              child: Text(
+                                                'History Shop',
+                                                style: TextStyle(fontSize: 16),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const Expanded(
+                                        flex: 1,
+                                        child: Icon(
+                                          Icons.navigate_next,
+                                          size: 20.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // ElevatedButton.icon(
+                            //   style: ElevatedButton.styleFrom(
+                            //     minimumSize: const Size.fromHeight(50),
+                            //   ),
+                            //   icon: const Icon(
+                            //     Icons.exit_to_app,
+                            //     size: 32,
+                            //   ),
+                            //   label: const Text(
+                            //     "Sign Out",
+                            //     style: TextStyle(fontSize: 24, color: Colors.black),
+                            //   ),
+                            //   onPressed: () => FirebaseAuth.instance.signOut(),
+                            // ),
 
-                          // ElevatedButton.icon(
-                          //   style: ElevatedButton.styleFrom(
-                          //     minimumSize: const Size.fromHeight(50),
-                          //   ),
-                          //   icon: const Icon(
-                          //     Icons.exit_to_app,
-                          //     size: 32,
-                          //   ),
-                          //   label: const Text(
-                          //     "Sign Out",
-                          //     style: TextStyle(fontSize: 24, color: Colors.black),
-                          //   ),
-                          //   onPressed: () => FirebaseAuth.instance.signOut(),
-                          // ),
+                            // ElevatedButton(
+                            //     onPressed: () {
+                            //       setState(() async {
+                            //         final result = await FilePicker.platform
+                            //             .pickFiles(
+                            //                 allowMultiple: false,
+                            //                 type: FileType.custom,
+                            //                 allowedExtensions: ['png']);
+                            //         if (result == null) {
+                            //           ScaffoldMessenger.of(context).showSnackBar(
+                            //               const SnackBar(
+                            //                   content: Text("No File Selected")));
+                            //           return null;
+                            //         } else {
+                            //           ScaffoldMessenger.of(context).showSnackBar(
+                            //               const SnackBar(
+                            //                   content: Text("File Selected")));
+                            //         }
+                            //         final path = result.files.single.path!;
+                            //         final filename = user.email!;
+                            //         //final fileName = result.files.single.name;
+                            //         print(path);
+                            //         // print(fileName);
+                            //         storage.UploadFile(filename, path)
+                            //             .then((value) => print('Done'));
+                            //       });
+                            //     },
+                            //     child: const Text("Upload File")),
+                            // ElevatedButton(
+                            //     onPressed: () {
+                            //       setState(() {
+                            //         storage.listFiles();
+                            //       });
+                            //     },
+                            //     child: const Icon(Icons.refresh)),
+                            // FutureBuilder(
+                            //   future: storage.listFiles(),
+                            //   builder: (BuildContext context,
+                            //       AsyncSnapshot<Firebase_storage_import.ListResult>
+                            //           snapshot) {
+                            //     if (snapshot.connectionState ==
+                            //             ConnectionState.done &&
+                            //         snapshot.hasData) {
+                            //       return Container(
+                            //         padding: const EdgeInsets.all(20),
+                            //         height: 100,
+                            //         child: ListView.builder(
+                            //           scrollDirection: Axis.horizontal,
+                            //           shrinkWrap: true,
+                            //           itemCount: snapshot.data!.items.length,
+                            //           itemBuilder:
+                            //               (BuildContext context, int index) {
+                            //             return Padding(
+                            //               padding: const EdgeInsets.all(8.0),
+                            //               child: ElevatedButton(
+                            //                 onPressed: () {
+                            //                   snapshot.data!.items[index].delete();
+                            //                 },
+                            //                 child: Text(
+                            //                     snapshot.data!.items[index].name),
+                            //               ),
+                            //             );
+                            //           },
+                            //         ),
+                            //       );
+                            //     }
+                            //     if (snapshot.connectionState ==
+                            //             ConnectionState.waiting ||
+                            //         !snapshot.hasData) {
+                            //       return const CircularProgressIndicator();
+                            //     }
 
-                          // ElevatedButton(
-                          //     onPressed: () {
-                          //       setState(() async {
-                          //         final result = await FilePicker.platform
-                          //             .pickFiles(
-                          //                 allowMultiple: false,
-                          //                 type: FileType.custom,
-                          //                 allowedExtensions: ['png']);
-                          //         if (result == null) {
-                          //           ScaffoldMessenger.of(context).showSnackBar(
-                          //               const SnackBar(
-                          //                   content: Text("No File Selected")));
-                          //           return null;
-                          //         } else {
-                          //           ScaffoldMessenger.of(context).showSnackBar(
-                          //               const SnackBar(
-                          //                   content: Text("File Selected")));
-                          //         }
-                          //         final path = result.files.single.path!;
-                          //         final filename = user.email!;
-                          //         //final fileName = result.files.single.name;
-                          //         print(path);
-                          //         // print(fileName);
-                          //         storage.UploadFile(filename, path)
-                          //             .then((value) => print('Done'));
-                          //       });
-                          //     },
-                          //     child: const Text("Upload File")),
-                          // ElevatedButton(
-                          //     onPressed: () {
-                          //       setState(() {
-                          //         storage.listFiles();
-                          //       });
-                          //     },
-                          //     child: const Icon(Icons.refresh)),
-                          // FutureBuilder(
-                          //   future: storage.listFiles(),
-                          //   builder: (BuildContext context,
-                          //       AsyncSnapshot<Firebase_storage_import.ListResult>
-                          //           snapshot) {
-                          //     if (snapshot.connectionState ==
-                          //             ConnectionState.done &&
-                          //         snapshot.hasData) {
-                          //       return Container(
-                          //         padding: const EdgeInsets.all(20),
-                          //         height: 100,
-                          //         child: ListView.builder(
-                          //           scrollDirection: Axis.horizontal,
-                          //           shrinkWrap: true,
-                          //           itemCount: snapshot.data!.items.length,
-                          //           itemBuilder:
-                          //               (BuildContext context, int index) {
-                          //             return Padding(
-                          //               padding: const EdgeInsets.all(8.0),
-                          //               child: ElevatedButton(
-                          //                 onPressed: () {
-                          //                   snapshot.data!.items[index].delete();
-                          //                 },
-                          //                 child: Text(
-                          //                     snapshot.data!.items[index].name),
-                          //               ),
-                          //             );
-                          //           },
-                          //         ),
-                          //       );
-                          //     }
-                          //     if (snapshot.connectionState ==
-                          //             ConnectionState.waiting ||
-                          //         !snapshot.hasData) {
-                          //       return const CircularProgressIndicator();
-                          //     }
-
-                          //     return Container();
-                          //   },
-                          // ),
+                            //     return Container();
+                            //   },
+                            // ),
+                          ),
                         ],
                       ),
                     );
