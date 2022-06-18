@@ -6,6 +6,7 @@ import 'package:proyekambw/SignUp-Page.dart';
 import 'package:proyekambw/detMakanan.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:proyekambw/navbar.dart';
+import 'package:proyekambw/shopping_Payment.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -22,6 +23,7 @@ Future<void> main() async {
     navigatorKey: navigatorKey,
     title: "Firebase CRUD",
     home: MainPage(),
+    //home: Home(),
   ));
 }
 
