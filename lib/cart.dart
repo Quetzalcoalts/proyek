@@ -9,9 +9,9 @@ List cart_gambar = [];
 List tumbal = [];
 
 class Cart extends StatefulWidget {
-  final List id;
-  final int item_id;
-  const Cart({ Key? key, required this.id, required this.item_id}) : super(key: key);
+  final List ?id;
+  final int ?item_id;
+  const Cart({ Key? key, this.id, this.item_id}) : super(key: key);
 
   @override
   State<Cart> createState() => _CartState();
@@ -27,27 +27,27 @@ class _CartState extends State<Cart> {
   void initial(){
     setState(() {
       if(cart_nama.length == 0){
-        cart_nama.add(widget.id[widget.item_id]['display']['displayName']);
-        cart_gambar.add(widget.id[widget.item_id]['display']['images'][0]);
+        cart_nama.add(widget.id![widget.item_id!]['display']['displayName']);
+        cart_gambar.add(widget.id![widget.item_id!]['display']['images'][0]);
       }
       else if(cart_nama.length == 1){
-        tumbal.add(widget.id[widget.item_id]['display']['displayName']);
+        tumbal.add(widget.id![widget.item_id!]['display']['displayName']);
         if(cart_nama[0] != tumbal[0]){
-          cart_nama.add(widget.id[widget.item_id]['display']['displayName']);
-          cart_gambar.add(widget.id[widget.item_id]['display']['images'][0]);
+          cart_nama.add(widget.id![widget.item_id!]['display']['displayName']);
+          cart_gambar.add(widget.id![widget.item_id!]['display']['images'][0]);
         }
         tumbal.clear();
       }
       else{
         int counter = 0;
-        tumbal.add(widget.id[widget.item_id]['display']['displayName']);
+        tumbal.add(widget.id![widget.item_id!]['display']['displayName']);
         for(int i = 0; i < cart_nama.length; i++){
           if(cart_nama[i] != tumbal[0]){
             counter ++;
           }
           if(counter == cart_nama.length){
-            cart_nama.add(widget.id[widget.item_id]['display']['displayName']);
-            cart_gambar.add(widget.id[widget.item_id]['display']['images'][0]);
+            cart_nama.add(widget.id![widget.item_id!]['display']['displayName']);
+            cart_gambar.add(widget.id![widget.item_id!]['display']['images'][0]);
           }
         }
       }
@@ -70,7 +70,7 @@ class _CartState extends State<Cart> {
             onTap: (){
               Navigator.push(
                 context, MaterialPageRoute(builder: (context){
-                  return detMakanan(id: widget.id, item_id: widget.item_id);
+                  return detMakanan(id: widget.id!, item_id: widget.item_id!);
                 })
               );
             },

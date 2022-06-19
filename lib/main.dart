@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:proyekambw/Profile-Page.dart';
 import 'package:proyekambw/SignUp-Page.dart';
+import 'package:proyekambw/cart.dart';
 import 'package:proyekambw/detMakanan.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:proyekambw/filter.dart';
 import 'package:proyekambw/navbar.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 List nama = [];
-List kategori = ["Makan Pagi", "Makan Siang", "Makan Malam"];
 
 final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
@@ -21,6 +23,7 @@ Future<void> main() async {
   runApp(MaterialApp(
     navigatorKey: navigatorKey,
     title: "Firebase CRUD",
+    debugShowCheckedModeBanner: true,
     home: MainPage(),
   ));
 }
@@ -158,7 +161,7 @@ class _MyAppState extends State<MyApp> {
         "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
-      'X-RapidAPI-Key': '5a6aa39fa0msh28698c21506b708p1e9946jsnc865e1cf3217'
+      'X-RapidAPI-Key': '8c00a4169emsh39f8279befde855p16b47cjsnef7ede20adb9'
     });
     var items = json.decode(response.body)['feed'];
     setState(() {
@@ -174,57 +177,43 @@ class _MyAppState extends State<MyApp> {
           Container(
             padding: EdgeInsets.fromLTRB(10, 35, 0, 0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.restaurant_menu),
-                Container(
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Text(
-                      "Food Recipe",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    )),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
-            child: SizedBox(
-              height: 30,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: kategori.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selected = index;
-                        });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${kategori[index]}",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: selected == index
-                                      ? FontWeight.w800
-                                      : FontWeight.normal),
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(top: 5),
-                                height: 2,
-                                width: 30,
-                                color: selected == index
-                                    ? Colors.grey
-                                    : Colors.transparent)
-                          ],
-                        ),
+                Row(
+                  children: [
+                    Icon(Icons.restaurant_menu),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      // ignore: prefer_const_constructors
+                      child: Text(
+                        "Food Recipe",
+                        style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                    );
-                  }),
+                  ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: IconButton(onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return Filter(isi: nama);
+                        } ));
+                      }, icon: Icon(Icons.filter_alt_outlined)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                      child: IconButton(onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return Cart();
+                        } ));
+                      } , icon: Icon(Icons.shopping_cart_outlined)),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -281,7 +270,8 @@ class _MyAppState extends State<MyApp> {
                               )
                             ],
                           ),
-                        ));
+                        )
+                      );
                   },
                 ),
               ),
