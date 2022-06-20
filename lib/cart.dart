@@ -25,31 +25,44 @@ class _CartState extends State<Cart> {
   }
 
   void initial(){
+    int c = 0;
     setState(() {
-      if(cart_nama.length == 0){
-        cart_nama.add(widget.id![widget.item_id!]['display']['displayName']);
-        cart_gambar.add(widget.id![widget.item_id!]['display']['images'][0]);
+      if(widget.id == null && widget.item_id == null){
+        cart_nama.add("halo ges");
+        cart_gambar.add("https://media.wired.com/photos/598e35fb99d76447c4eb1f28/16:9/w_2123,h_1194,c_limit/phonepicutres-TA.jpg");
+        c = 1;
       }
-      else if(cart_nama.length == 1){
-        tumbal.add(widget.id![widget.item_id!]['display']['displayName']);
-        if(cart_nama[0] != tumbal[0]){
+      else{
+        if(cart_nama.length == 0){
           cart_nama.add(widget.id![widget.item_id!]['display']['displayName']);
           cart_gambar.add(widget.id![widget.item_id!]['display']['images'][0]);
         }
-        tumbal.clear();
-      }
-      else{
-        int counter = 0;
-        tumbal.add(widget.id![widget.item_id!]['display']['displayName']);
-        for(int i = 0; i < cart_nama.length; i++){
-          if(cart_nama[i] != tumbal[0]){
-            counter ++;
-          }
-          if(counter == cart_nama.length){
+        else if(cart_nama.length == 1){
+          tumbal.add(widget.id![widget.item_id!]['display']['displayName']);
+          if(cart_nama[0] != tumbal[0]){
             cart_nama.add(widget.id![widget.item_id!]['display']['displayName']);
             cart_gambar.add(widget.id![widget.item_id!]['display']['images'][0]);
           }
+          tumbal.clear();
         }
+        else{
+          int counter = 0;
+          tumbal.add(widget.id![widget.item_id!]['display']['displayName']);
+          for(int i = 0; i < cart_nama.length; i++){
+            if(cart_nama[i] != tumbal[0]){
+              counter ++;
+            }
+            if(counter == cart_nama.length){
+              cart_nama.add(widget.id![widget.item_id!]['display']['displayName']);
+              cart_gambar.add(widget.id![widget.item_id!]['display']['images'][0]);
+            }
+          }
+        }
+      }
+      if(c == 1){
+        cart_gambar.clear();
+        cart_nama.clear();
+        c = 0;
       }
       tumbal.clear();
     });

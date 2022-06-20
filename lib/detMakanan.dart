@@ -11,9 +11,9 @@ import 'cart.dart';
 int jumlah = 1;
 
 class detMakanan extends StatefulWidget {
-  final List id;
-  final int item_id;
-  const detMakanan({Key? key, required this.id, required this.item_id})
+  final List ?id;
+  final int ?item_id;
+  const detMakanan({Key? key, this.id, this.item_id})
       : super(key: key);
   @override
   State<detMakanan> createState() => _detMakananState();
@@ -61,7 +61,7 @@ class _detMakananState extends State<detMakanan> {
                           child: Card(
                             color: Color.fromARGB(255, 4, 162, 241),
                             elevation: 0,
-                            child: Text("${widget.id[widget.item_id]['display']['displayName']}",
+                            child: Text("${widget.id![widget.item_id!]['display']['displayName']}",
                             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: Colors.white),
                             overflow: TextOverflow.visible,
                             maxLines: 5,
@@ -72,7 +72,7 @@ class _detMakananState extends State<detMakanan> {
                           padding: EdgeInsets.fromLTRB(10,5,8,0),
                           child: Row(
                             children: [
-                              Text("${widget.id[widget.item_id]['display']['flag']}",
+                              Text("${widget.id![widget.item_id!]['display']['flag']}",
                               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15, color: Colors.white),
                               ),
                             ],
@@ -84,7 +84,7 @@ class _detMakananState extends State<detMakanan> {
                             Container(
                               padding: EdgeInsets.fromLTRB(0, 30, 20, 0),
                               child: Image.network(
-                                "${widget.id[widget.item_id]['display']['images'][0]}",
+                                "${widget.id![widget.item_id!]['display']['images'][0]}",
                                 height: 140,
                                 width: 168,
                                 fit: BoxFit.cover,
@@ -100,8 +100,8 @@ class _detMakananState extends State<detMakanan> {
                               height: 200,
                               child: Card(
                                 elevation: 0,
-                                child: Text("${widget.id[widget.item_id]['content']['description'] != null ? 
-                                widget.id[widget.item_id]['content']['description']['text'] : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'},",
+                                child: Text("${widget.id![widget.item_id!]['content']['description'] != null ? 
+                                widget.id![widget.item_id!]['content']['description']['text'] : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'},",
                                 style: TextStyle(fontSize: 15),
                                 overflow: TextOverflow.visible,
                                 maxLines: 10,
