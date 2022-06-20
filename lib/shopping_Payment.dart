@@ -2,12 +2,12 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class Home extends StatefulWidget {
+class Pembayaran extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _PembayaranState createState() => _PembayaranState();
 }
 
-class _HomeState extends State<Home> {
+class _PembayaranState extends State<Pembayaran> {
   TextEditingController textEditingController = new TextEditingController();
   late Razorpay razorpay;
 

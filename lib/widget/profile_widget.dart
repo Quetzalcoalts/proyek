@@ -18,35 +18,49 @@ class ProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
     return Center(
-      child: Stack(
-        children: [
-          buildImage(),
-          Positioned(bottom: 0, right: 4, child: buildEditIcon(color)),
-        ],
-      ),
+      child: buildImage(color),
     );
   }
 
-  Widget buildImage() {
-    if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-      final image = NetworkImage(snapshot.data!);
-      return ClipOval(
-        child: Material(
-          color: Colors.transparent,
-          child: Ink.image(
-            image: image,
-            fit: BoxFit.cover,
-            width: 128,
-            height: 128,
-            child: InkWell(
-              onTap: onClicked,
+  Future checkImage() async {
+    try {
+      await snapshot.hasData;
+    } on AsyncSnapshot catch (e) {
+      print(e);
+    }
+  }
+
+  Widget buildImage(Color color) {
+    //final image = NetworkImage(snapshot.data!);
+    // if (!snapshot.hasData) {
+    late var image2 = NetworkImage('');
+    print('Printed : ${snapshot.data}');
+    checkImage();
+    if (snapshot.data.toString() != "null") {
+      image2 = NetworkImage('${snapshot.data}');
+    } else {
+      image2 = NetworkImage(
+          'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif');
+    }
+    return Stack(
+      children: [
+        ClipOval(
+          child: Material(
+            color: Colors.transparent,
+            child: Ink.image(
+              image: image2,
+              fit: BoxFit.cover,
+              width: 128,
+              height: 128,
+              child: InkWell(
+                onTap: onClicked,
+              ),
             ),
           ),
         ),
-      );
-    } else {
-      return Container();
-    }
+        Positioned(bottom: 0, right: 4, child: buildEditIcon(color)),
+      ],
+    );
   }
 
   Widget buildEditIcon(Color color) => buildCircle(

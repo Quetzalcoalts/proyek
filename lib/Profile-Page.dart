@@ -8,6 +8,7 @@ import 'package:proyekambw/detdata-changeprofile.dart';
 import 'package:proyekambw/history.dart';
 import 'package:proyekambw/main.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:proyekambw/shopping_Payment.dart';
 import 'package:proyekambw/widget/profile_widget.dart';
 import 'Profile.dart';
 import 'storage_files.dart';
@@ -92,8 +93,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                         onPrimary: Colors.blue,
                                         shadowColor: Colors.blueAccent,
                                         elevation: 5),
-                                    onPressed: () =>
-                                        FirebaseAuth.instance.signOut(),
+                                    onPressed: () {
+                                      FirebaseAuth.instance.signOut();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()));
+                                    },
                                     child: Container(
                                       child: Row(
                                         children: const [
@@ -117,54 +124,76 @@ class _ProfilePageState extends State<ProfilePage> {
                                   storage.downloadURL(user.email.toString()),
                               builder: (BuildContext context,
                                   AsyncSnapshot<String> snapshot) {
-                                if (snapshot.connectionState ==
-                                        ConnectionState.done &&
-                                    snapshot.hasData) {
-                                  // return Container(
-                                  //   width: 300,
-                                  //   height: 250,
-                                  //   child: Image.network(
-                                  //     snapshot.data!,
-                                  //     fit: BoxFit.cover,
-                                  //   ),
-                                  // );
-                                  return ProfileWidget(
-                                    snapshot: snapshot,
-                                    onClicked: () async {
-                                      setState(
-                                        () async {
-                                          storage.listFiles();
-                                        },
-                                      );
-                                      final result = await FilePicker.platform
-                                          .pickFiles(
-                                              allowMultiple: false,
-                                              type: FileType.custom,
-                                              allowedExtensions: ['png']);
-                                      if (result == null) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content:
-                                                    Text("No File Selected")));
-                                        return null;
-                                      } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content:
-                                                    Text("File Selected")));
-                                      }
-                                      final path = result.files.single.path!;
-                                      final filename = user.email!;
-                                      //final fileName = result.files.single.name;
-                                      print(path);
-                                      // print(fileName);
-                                      storage.UploadFile(filename, path)
-                                          .then((value) => print('Done'));
-                                    },
-                                    user_email: user.email!.toString(),
-                                  );
-                                }
-                                return CircularProgressIndicator();
+                                return ProfileWidget(
+                                  snapshot: snapshot,
+                                  onClicked: () async {
+                                    setState(
+                                      () async {
+                                        storage.listFiles();
+                                      },
+                                    );
+                                    final result = await FilePicker.platform
+                                        .pickFiles(
+                                            allowMultiple: false,
+                                            type: FileType.custom,
+                                            allowedExtensions: ['png']);
+                                    if (result == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content:
+                                                  Text("No File Selected")));
+                                      return null;
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text("File Selected")));
+                                    }
+                                    final path = result.files.single.path!;
+                                    final filename = user.email!;
+                                    //final fileName = result.files.single.name;
+                                    print(path);
+                                    // print(fileName);
+                                    storage.UploadFile(filename, path)
+                                        .then((value) => print('Done'));
+                                  },
+                                  user_email: user.email!.toString(),
+                                );
+
+                                // return ElevatedButton(
+                                //     onPressed: () async {
+                                //       setState(
+                                //         () async {
+                                //           storage.listFiles();
+                                //           final result = await FilePicker
+                                //               .platform
+                                //               .pickFiles(
+                                //                   allowMultiple: false,
+                                //                   type: FileType.custom,
+                                //                   allowedExtensions: ['png']);
+                                //           if (result == null) {
+                                //             ScaffoldMessenger.of(context)
+                                //                 .showSnackBar(const SnackBar(
+                                //                     content: Text(
+                                //                         "No File Selected")));
+                                //             return null;
+                                //           } else {
+                                //             ScaffoldMessenger.of(context)
+                                //                 .showSnackBar(const SnackBar(
+                                //                     content:
+                                //                         Text("File Selected")));
+                                //           }
+                                //           final path =
+                                //               result.files.single.path!;
+                                //           final filename = user.email!;
+                                //           //final fileName = result.files.single.name;
+                                //           print(path);
+                                //           // print(fileName);
+                                //           storage.UploadFile(filename, path)
+                                //               .then((value) => print('Done'));
+                                //         },
+                                //       );
+                                //     },
+                                //     child: Container());
                               },
                             ),
                             Container(
@@ -336,96 +365,61 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ],
                                 ),
                               ),
-                              // ElevatedButton.icon(
-                              //   style: ElevatedButton.styleFrom(
-                              //     minimumSize: const Size.fromHeight(50),
-                              //   ),
-                              //   icon: const Icon(
-                              //     Icons.exit_to_app,
-                              //     size: 32,
-                              //   ),
-                              //   label: const Text(
-                              //     "Sign Out",
-                              //     style: TextStyle(fontSize: 24, color: Colors.black),
-                              //   ),
-                              //   onPressed: () => FirebaseAuth.instance.signOut(),
-                              // ),
-
-                              // ElevatedButton(
-                              //     onPressed: () {
-                              //       setState(() async {
-                              //         final result = await FilePicker.platform
-                              //             .pickFiles(
-                              //                 allowMultiple: false,
-                              //                 type: FileType.custom,
-                              //                 allowedExtensions: ['png']);
-                              //         if (result == null) {
-                              //           ScaffoldMessenger.of(context).showSnackBar(
-                              //               const SnackBar(
-                              //                   content: Text("No File Selected")));
-                              //           return null;
-                              //         } else {
-                              //           ScaffoldMessenger.of(context).showSnackBar(
-                              //               const SnackBar(
-                              //                   content: Text("File Selected")));
-                              //         }
-                              //         final path = result.files.single.path!;
-                              //         final filename = user.email!;
-                              //         //final fileName = result.files.single.name;
-                              //         print(path);
-                              //         // print(fileName);
-                              //         storage.UploadFile(filename, path)
-                              //             .then((value) => print('Done'));
-                              //       });
-                              //     },
-                              //     child: const Text("Upload File")),
-                              // ElevatedButton(
-                              //     onPressed: () {
-                              //       setState(() {
-                              //         storage.listFiles();
-                              //       });
-                              //     },
-                              //     child: const Icon(Icons.refresh)),
-                              // FutureBuilder(
-                              //   future: storage.listFiles(),
-                              //   builder: (BuildContext context,
-                              //       AsyncSnapshot<Firebase_storage_import.ListResult>
-                              //           snapshot) {
-                              //     if (snapshot.connectionState ==
-                              //             ConnectionState.done &&
-                              //         snapshot.hasData) {
-                              //       return Container(
-                              //         padding: const EdgeInsets.all(20),
-                              //         height: 100,
-                              //         child: ListView.builder(
-                              //           scrollDirection: Axis.horizontal,
-                              //           shrinkWrap: true,
-                              //           itemCount: snapshot.data!.items.length,
-                              //           itemBuilder:
-                              //               (BuildContext context, int index) {
-                              //             return Padding(
-                              //               padding: const EdgeInsets.all(8.0),
-                              //               child: ElevatedButton(
-                              //                 onPressed: () {
-                              //                   snapshot.data!.items[index].delete();
-                              //                 },
-                              //                 child: Text(
-                              //                     snapshot.data!.items[index].name),
-                              //               ),
-                              //             );
-                              //           },
-                              //         ),
-                              //       );
-                              //     }
-                              //     if (snapshot.connectionState ==
-                              //             ConnectionState.waiting ||
-                              //         !snapshot.hasData) {
-                              //       return const CircularProgressIndicator();
-                              //     }
-
-                              //     return Container();
-                              //   },
-                              // ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    onPrimary: Colors.blue,
+                                    shadowColor: Colors.blueAccent,
+                                    elevation: 5),
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return Pembayaran();
+                                  }));
+                                },
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: Row(
+                                            children: const [
+                                              Expanded(
+                                                flex: 1,
+                                                child: Icon(
+                                                  Icons.money,
+                                                  size: 20.0,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 5,
+                                                child: Text(
+                                                  'Pembayaran',
+                                                  style:
+                                                      TextStyle(fontSize: 16),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const Expanded(
+                                          flex: 1,
+                                          child: Icon(
+                                            Icons.navigate_next,
+                                            size: 20.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),
