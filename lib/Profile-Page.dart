@@ -375,10 +375,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                     shadowColor: Colors.blueAccent,
                                     elevation: 5),
                                 onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return Pembayaran();
-                                  }));
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return Pembayaran();
+                                      },
+                                    ),
+                                  );
                                 },
                                 child: Column(
                                   children: [
