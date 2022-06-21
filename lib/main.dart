@@ -51,25 +51,26 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool _isVisible = false;
-  _MainPageState() {
-    new Timer(const Duration(milliseconds: 2000), () {
-      setState(() {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginPage(),
-          ),
-        );
-      });
-    });
+  // @override
+  // _MainPageState() {
+  //   new Timer(const Duration(milliseconds: 2000), () {
+  //     setState(() {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => LoginPage(),
+  //         ),
+  //       );
+  //     });
+  //   });
 
-    new Timer(Duration(milliseconds: 10), () {
-      setState(() {
-        _isVisible =
-            true; // Now it is showing fade effect and navigating to Login page
-      });
-    });
-  }
+  //   new Timer(Duration(milliseconds: 10), () {
+  //     setState(() {
+  //       _isVisible =
+  //           true; // Now it is showing fade effect and navigating to Login page
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class _MainPageState extends State<MainPage> {
           } else if (snapshot.hasData) {
             return NavBar();
           } else {
-            return LoginPage();
+            return MyApp();
             // return Container(
             //   decoration: new BoxDecoration(
             //     gradient: new LinearGradient(
@@ -440,6 +441,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int selected = 0;
+  var index = 0;
 
   @override
   void initState() {
@@ -448,7 +450,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   getName() async {
-    var url = Uri.https(
+    var url = await Uri.https(
         "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     // var url = Uri.https("yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     var response = await http.get(url, headers: {
@@ -525,52 +527,94 @@ class _MyAppState extends State<MyApp> {
                 childAspectRatio: 0.85,
                 children: List.generate(
                   nama.length,
-                  (index) {
-                    return GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return detMakanan(
-                              id: nama,
-                              item_id: index,
-                            );
-                          }));
-                        },
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                // ignore: unnecessary_new
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 0.5, color: Colors.grey),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child: Container(
-                                  child: Row(
-                                    children: [
-                                      Image.network(
-                                        "${nama[index]['display']['images'][0]}",
-                                        height: 130,
-                                        width: 168,
-                                        fit: BoxFit.cover,
-                                      )
-                                    ],
+                  (apapun) {
+                    print(" print jumlah = ${nama.length}");
+                    if (apapun != 9) {
+                      return GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return detMakanan(
+                                id: nama,
+                                item_id: apapun,
+                              );
+                            }));
+                          },
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  // ignore: unnecessary_new
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 0.5, color: Colors.grey),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Image.network(
+                                          "${nama[apapun]['display']['images'][0]}",
+                                          height: 130,
+                                          width: 168,
+                                          fit: BoxFit.cover,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Center(
-                                child: Text(
-                                  "${nama[index]['display']['displayName']}",
-                                  style: TextStyle(fontSize: 15),
+                                Center(
+                                  child: Text(
+                                    "${nama[apapun]['display']['displayName']}",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ));
+                    } else {
+                      return GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return detMakanan(
+                                id: nama,
+                                item_id: apapun,
+                              );
+                            }));
+                          },
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  // ignore: unnecessary_new
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 0.5, color: Colors.grey),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Container(
+                                    child: Row(
+                                      children: [Icon(Icons.android)],
+                                    ),
+                                  ),
                                 ),
-                              )
-                            ],
-                          ),
-                        ));
+                                Center(
+                                  child: Text(
+                                    "${nama[apapun]['display']['displayName']}",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ));
+                    }
                   },
+                  growable: false,
                 ),
               ),
             ),
