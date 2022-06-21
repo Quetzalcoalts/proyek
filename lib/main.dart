@@ -91,64 +91,65 @@ class _MainPageState extends State<MainPage> {
           } else if (snapshot.hasData) {
             return NavBar();
           } else {
-            //return LoginPage();
-            return Container(
-              decoration: new BoxDecoration(
-                gradient: new LinearGradient(
-                  colors: [
-                    Theme.of(context).accentColor,
-                    Theme.of(context).primaryColor
-                  ],
-                  begin: const FractionalOffset(0, 0),
-                  end: const FractionalOffset(1.0, 0.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp,
-                ),
-              ),
-              child: AnimatedOpacity(
-                opacity: _isVisible ? 1.0 : 0,
-                duration: Duration(milliseconds: 1200),
-                child: Center(
-                  child: Container(
-                    height: 140.0,
-                    width: 140.0,
-                    child: Center(
-                      child: Column(
-                        children: const [
-                          ClipOval(
-                            child: Icon(
-                              Icons.shopping_bag,
-                              size: 128,
-                            ), //put your logo here
-                          ),
-                          // SizedBox(
-                          //   height: 50,
-                          // ),
-                          // Text(
-                          //   "MY FOOD",
-                          //   style: TextStyle(
-                          //       fontSize: 24,
-                          //       fontStyle: FontStyle.italic,
-                          //       fontWeight: FontWeight.bold),
-                          // )
-                        ],
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            blurRadius: 2.0,
-                            offset: Offset(5.0, 3.0),
-                            spreadRadius: 2.0,
-                          )
-                        ]),
-                  ),
-                ),
-              ),
-            );
+            return LoginPage();
+            // return Container(
+            //   decoration: new BoxDecoration(
+            //     gradient: new LinearGradient(
+            //       colors: [
+            //         Theme.of(context).accentColor,
+            //         Theme.of(context).primaryColor
+            //       ],
+            //       begin: const FractionalOffset(0, 0),
+            //       end: const FractionalOffset(1.0, 0.0),
+            //       stops: [0.0, 1.0],
+            //       tileMode: TileMode.clamp,
+            //     ),
+            //   ),
+            //   child: AnimatedOpacity(
+            //     opacity: _isVisible ? 1.0 : 0,
+            //     duration: Duration(milliseconds: 1200),
+            //     child: Center(
+            //       child: Container(
+            //         height: 140.0,
+            //         width: 140.0,
+            //         child: Center(
+            //           child: Column(
+            //             children: const [
+            //               ClipOval(
+            //                 child: Icon(
+            //                   Icons.shopping_bag,
+            //                   size: 128,
+            //                 ), //put your logo here
+            //               ),
+            //               // SizedBox(
+            //               //   height: 50,
+            //               // ),
+            //               // Text(
+            //               //   "MY FOOD",
+            //               //   style: TextStyle(
+            //               //       fontSize: 24,
+            //               //       fontStyle: FontStyle.italic,
+            //               //       fontWeight: FontWeight.bold),
+            //               // )
+            //             ],
+            //           ),
+            //         ),
+            //         decoration: BoxDecoration(
+            //             shape: BoxShape.circle,
+            //             color: Colors.white,
+            //             boxShadow: [
+            //               BoxShadow(
+            //                 color: Colors.black.withOpacity(0.3),
+            //                 blurRadius: 2.0,
+            //                 offset: Offset(5.0, 3.0),
+            //                 spreadRadius: 2.0,
+            //               )
+            //             ]),
+            //       ),
+            //     ),
+            //   ),
+            // );
+
           }
         },
       ),
@@ -447,10 +448,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   getName() async {
-    var url = Uri.https("yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
+    var url = Uri.https(
+        "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
+    // var url = Uri.https("yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
-      'X-RapidAPI-Key': '8c00a4169emsh39f8279befde855p16b47cjsnef7ede20adb9'
+      'X-RapidAPI-Key': 'c6321e535cmshe3a45a656618a24p1c5898jsn117bc98a5908'
     });
     var items = json.decode(response.body)['feed'];
     setState(() {
