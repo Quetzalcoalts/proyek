@@ -447,8 +447,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   getName() async {
-    var url = Uri.https(
-        "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
+    var url = Uri.https("yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
       'X-RapidAPI-Key': '8c00a4169emsh39f8279befde855p16b47cjsnef7ede20adb9'
@@ -457,6 +456,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       nama = items;
     });
+    print(nama);
   }
 
   @override

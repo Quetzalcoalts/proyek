@@ -57,7 +57,7 @@ class _detMakananState extends State<detMakanan> {
                         Container(
                           padding: EdgeInsets.fromLTRB(8,10,8,0),
                           width: 410,
-                          height: 60,
+                          height: 40,
                           child: Card(
                             color: Color.fromARGB(255, 4, 162, 241),
                             elevation: 0,
@@ -69,11 +69,39 @@ class _detMakananState extends State<detMakanan> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(10,5,8,0),
+                          padding: EdgeInsets.fromLTRB(10,0,8,0),
                           child: Row(
                             children: [
                               Text("${widget.id![widget.item_id!]['display']['flag']}",
-                              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15, color: Colors.white),
+                              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10,0,0,0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                height: 30,
+                                width: 100,
+                                child: Text("Rating",
+                                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.white),
+                                )
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10,0,0,0),
+                          child: Row(
+                            children: [
+                              Icon(Icons.star, color: Colors.yellow,),
+                              Text("${widget.id![widget.item_id!]['content']['reviews'] != null ? 
+                              widget.id![widget.item_id!]['content']['reviews']['averageRating'].toString() : "3"}",
+                              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.white),
                               ),
                             ],
                           ),
@@ -82,7 +110,7 @@ class _detMakananState extends State<detMakanan> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              padding: EdgeInsets.fromLTRB(0, 30, 20, 0),
+                              padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                               child: Image.network(
                                 "${widget.id![widget.item_id!]['display']['images'][0]}",
                                 height: 140,
@@ -95,7 +123,7 @@ class _detMakananState extends State<detMakanan> {
                         Row(
                           children: [
                             Container(
-                              margin: EdgeInsets.only(top: 10),
+                              margin: EdgeInsets.only(top: 25),
                               width: 380,
                               height: 200,
                               child: Card(
