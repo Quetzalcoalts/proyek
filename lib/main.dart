@@ -51,26 +51,26 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool _isVisible = false;
-  // @override
-  // _MainPageState() {
-  //   new Timer(const Duration(milliseconds: 2000), () {
-  //     setState(() {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => LoginPage(),
-  //         ),
-  //       );
-  //     });
-  //   });
+  @override
+  _MainPageState() {
+    // new Timer(const Duration(milliseconds: 2000), () {
+    //   setState(() {
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => MyApp(),
+    //       ),
+    //     );
+    //   });
+    // });
 
-  //   new Timer(Duration(milliseconds: 10), () {
-  //     setState(() {
-  //       _isVisible =
-  //           true; // Now it is showing fade effect and navigating to Login page
-  //     });
-  //   });
-  // }
+    // new Timer(Duration(milliseconds: 10), () {
+    //   setState(() {
+    //     _isVisible =
+    //         true; // Now it is showing fade effect and navigating to Login page
+    //   });
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,9 @@ class _MainPageState extends State<MainPage> {
           } else if (snapshot.hasData) {
             return NavBar();
           } else {
-            return MyApp();
+            return LoginPage();
+            //return Center(child: CircularProgressIndicator());
+            //return MyApp();
             // return Container(
             //   decoration: new BoxDecoration(
             //     gradient: new LinearGradient(
