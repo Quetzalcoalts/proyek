@@ -88,6 +88,7 @@ class _CartState extends State<Cart> {
               );
             },
             child: Container(
+              color: Colors.white,
               child: Column(
                 children: [
                   Row(
@@ -109,8 +110,16 @@ class _CartState extends State<Cart> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
+                            color: Colors.white,
+                            width: 250,
                             margin: EdgeInsets.fromLTRB(10, 8, 0, 10),
-                            child: Text(cart_nama[index])
+                            child: Card(
+                              elevation: 0,
+                              child: Text(cart_nama[index],
+                              overflow: TextOverflow.visible,
+                              maxLines: 4,
+                              ),
+                            )
                           ),
                           Container(
                             height: 30,

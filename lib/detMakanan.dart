@@ -9,6 +9,7 @@ import 'main.dart';
 import 'cart.dart';
 
 int jumlah = 1;
+int harga = 50;
 
 class detMakanan extends StatefulWidget {
   final List ?id;
@@ -51,13 +52,13 @@ class _detMakananState extends State<detMakanan> {
                     height: 400,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(8,10,8,0),
+                          padding: EdgeInsets.fromLTRB(8,5,8,0),
                           width: 410,
-                          height: 40,
+                          height: 50,
                           child: Card(
                             color: Color.fromARGB(255, 4, 162, 241),
                             elevation: 0,
@@ -69,39 +70,44 @@ class _detMakananState extends State<detMakanan> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(10,0,8,0),
+                          padding: EdgeInsets.fromLTRB(10,8,8,0),
                           child: Row(
-                            children: [
-                              Text("${widget.id![widget.item_id!]['display']['flag']}",
-                              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10,0,0,0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                height: 30,
-                                width: 100,
-                                child: Text("Rating",
+                                height: 15,
+                                width: 150,
+                                child: Text("${widget.id![widget.item_id!]['display']['flag']}",
                                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.white),
-                                )
+                                ),
                               ),
                             ],
                           ),
                         ),
+                        Container(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                              height: 25,
+                              width: 100,
+                              child: Text("Rating",
+                              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.white),
+                              )
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(10,0,0,0),
-                          child: Row(
+                          child: Column(
                             children: [
-                              Icon(Icons.star, color: Colors.yellow,),
-                              Text("${widget.id![widget.item_id!]['content']['reviews'] != null ? 
-                              widget.id![widget.item_id!]['content']['reviews']['averageRating'].toString() : "3"}",
-                              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.white),
+                              Row(
+                                children: [
+                                  Icon(Icons.star, color: Colors.yellow,),
+                                  Text("${widget.id![widget.item_id!]['content']['reviews'] != null ? 
+                                  widget.id![widget.item_id!]['content']['reviews']['averageRating'] != null ?  widget.id![widget.item_id!]['content']['reviews']['averageRating'] : "3"  : "3"}",
+                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.white),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -123,7 +129,7 @@ class _detMakananState extends State<detMakanan> {
                         Row(
                           children: [
                             Container(
-                              margin: EdgeInsets.only(top: 25),
+                              margin: EdgeInsets.only(top: 15),
                               width: 380,
                               height: 200,
                               child: Card(
@@ -157,6 +163,7 @@ class _detMakananState extends State<detMakanan> {
                                         if(jumlah > 0){
                                           jumlah --;
                                         }
+                                        harga = 50 * jumlah;
                                       });
                                     },
                                     child: Icon(Icons.remove),
@@ -180,9 +187,16 @@ class _detMakananState extends State<detMakanan> {
                                       setState(() {
                                         jumlah ++;
                                       });
+                                      harga = 50 * jumlah;
                                     },
                                     child: Icon(Icons.add),
                                   ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                  child: Text("${harga.toString()}\$",
+                                  style: TextStyle(fontSize: 17),
+                                  )
                                 ),
                               ],
                             ),
@@ -191,7 +205,7 @@ class _detMakananState extends State<detMakanan> {
                         Column(
                           children: [
                             Container(
-                              padding: EdgeInsets.fromLTRB(5, 35, 0, 0),
+                              padding: EdgeInsets.fromLTRB(5, 25, 0, 0),
                               child: Row(
                                 children: [
                                   Container(

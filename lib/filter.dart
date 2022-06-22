@@ -25,6 +25,7 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
+
   void checking3(){
     if(rat3.length >= 1){
       rat3.clear();
@@ -32,10 +33,19 @@ class _FilterState extends State<Filter> {
       rat3_gam.clear();
     }
     for(int i = 0; i < widget.isi.length; i++){
-      if(widget.isi[i]['content']['reviews'] != null && widget.isi[i]['content']['reviews']['averageRating'] == 3){
+      if(widget.isi[i]['content']['reviews'] == null || widget.isi[i]['content']['reviews']['averageRating'] == null){
         rat3.add(widget.isi[i]);
         rat3_gam.add(widget.isi[i]['display']['images'][0]);
         rat3_nama.add(widget.isi[i]['display']['displayName']);
+      }
+    }
+    for(int i = 0; i < widget.isi.length; i++){
+      if(widget.isi[i]['content']['reviews'] != null && widget.isi[i]['content']['reviews']['averageRating'] != null){
+        if(widget.isi[i]['content']['reviews']['averageRating'] >= 3 && widget.isi[i]['content']['reviews']['averageRating'] <= 3.99){
+          rat3.add(widget.isi[i]);
+          rat3_gam.add(widget.isi[i]['display']['images'][0]);
+          rat3_nama.add(widget.isi[i]['display']['displayName']);
+        }
       }
     }
     print(rat3);
@@ -51,10 +61,12 @@ class _FilterState extends State<Filter> {
       rat4_nama.clear();
     }
     for(int i = 0; i < widget.isi.length; i++){
-      if(widget.isi[i]['content']['reviews'] != null && widget.isi[i]['content']['reviews']['averageRating'] == 4 ){
-        rat4.add(widget.isi[i]);
-        rat4_gam.add(widget.isi[i]['display']['images'][0]);
-        rat4_nama.add(widget.isi[i]['display']['displayName']);
+      if(widget.isi[i]['content']['reviews'] != null && widget.isi[i]['content']['reviews']['averageRating'] != null){
+        if(widget.isi[i]['content']['reviews']['averageRating'] >= 4 && widget.isi[i]['content']['reviews']['averageRating'] <= 4.99){
+          rat4.add(widget.isi[i]);
+          rat4_gam.add(widget.isi[i]['display']['images'][0]);
+          rat4_nama.add(widget.isi[i]['display']['displayName']);
+        }
       }
     }
     print(rat4);
@@ -70,10 +82,12 @@ class _FilterState extends State<Filter> {
       rat5_gam.clear();
     }
     for(int i = 0; i < widget.isi.length; i++){
-      if(widget.isi[i]['content']['reviews'] != null && widget.isi[i]['content']['reviews']['averageRating'] == 5 ){
-        rat5.add(widget.isi[i]);
-        rat5_gam.add(widget.isi[i]['display']['images'][0]);
-        rat5_nama.add(widget.isi[i]['display']['displayName']);
+      if(widget.isi[i]['content']['reviews'] != null && widget.isi[i]['content']['reviews']['averageRating'] != null){
+        if(widget.isi[i]['content']['reviews']['averageRating'] >= 5 && widget.isi[i]['content']['reviews']['averageRating'] <= 5.99){
+          rat5.add(widget.isi[i]);
+          rat5_gam.add(widget.isi[i]['display']['images'][0]);
+          rat5_nama.add(widget.isi[i]['display']['displayName']);
+        }
       }
     }
     print(rat5);
