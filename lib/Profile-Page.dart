@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:proyekambw/RefreshWidget.dart';
+import 'package:proyekambw/cart_firebase.dart';
 import 'package:proyekambw/dbservices.dart';
 import 'package:proyekambw/detdata-changeprofile.dart';
 import 'package:proyekambw/history.dart';
@@ -59,7 +60,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 itemBuilder: (BuildContext context, int index) {
                   DocumentSnapshot user_fromfirebase =
                       snapshot.data!.docs[index];
-
                   String item_ID = user_fromfirebase["Id"];
                   String item_Nama = user_fromfirebase["Nama"];
                   String item_alamat = user_fromfirebase["Alamat"];
@@ -68,14 +68,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   String item_Email = user_fromfirebase["Email"];
                   String item_Password = user_fromfirebase["Password"];
                   // _jumlah = snapshot.data!.docs.length;
-                  // return ListTile(
-                  //   onTap: () {},
-                  //   onLongPress: () {
-                  //     //Database.DeleteData(Nama_KTM: no.toString());
-                  //   },
-                  //   title: Text(no.toString()),
-                  //   subtitle: Text(Nama),
-                  // );
 
                   if (item_Email == user.email) {
                     return SingleChildScrollView(
@@ -159,42 +151,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   },
                                   user_email: user.email!.toString(),
                                 );
-
-                                // return ElevatedButton(
-                                //     onPressed: () async {
-                                //       setState(
-                                //         () async {
-                                //           storage.listFiles();
-                                //           final result = await FilePicker
-                                //               .platform
-                                //               .pickFiles(
-                                //                   allowMultiple: false,
-                                //                   type: FileType.custom,
-                                //                   allowedExtensions: ['png']);
-                                //           if (result == null) {
-                                //             ScaffoldMessenger.of(context)
-                                //                 .showSnackBar(const SnackBar(
-                                //                     content: Text(
-                                //                         "No File Selected")));
-                                //             return null;
-                                //           } else {
-                                //             ScaffoldMessenger.of(context)
-                                //                 .showSnackBar(const SnackBar(
-                                //                     content:
-                                //                         Text("File Selected")));
-                                //           }
-                                //           final path =
-                                //               result.files.single.path!;
-                                //           final filename = user.email!;
-                                //           //final fileName = result.files.single.name;
-                                //           print(path);
-                                //           // print(fileName);
-                                //           storage.UploadFile(filename, path)
-                                //               .then((value) => print('Done'));
-                                //         },
-                                //       );
-                                //     },
-                                //     child: Container());
                               },
                             ),
                             Container(
@@ -229,37 +185,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  // Text("Alamat : ${item_alamat}"),
-                                  // const SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // Text("Nomor HP : ${item_noHP}"),
-                                  // const SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // Text("Saldo : ${item_Saldo}"),
-                                  // const SizedBox(
-                                  //   height: 10,
-                                  // ),
                                   Text("Email : ${item_Email}"),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  // Text("Password : ${item_Password}"),
-                                  // const SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // const Text(
-                                  //   "Signed In as",
-                                  //   style: TextStyle(fontSize: 16),
-                                  // ),
-                                  // const SizedBox(
-                                  //   height: 8,
-                                  // ),
-                                  // Text(
-                                  //   user.email!,
-                                  //   style: const TextStyle(fontSize: 20),
-                                  // ),
                                   const SizedBox(
                                     height: 20,
                                   ),
@@ -406,6 +335,61 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 flex: 5,
                                                 child: Text(
                                                   'Pembayaran',
+                                                  style:
+                                                      TextStyle(fontSize: 16),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const Expanded(
+                                          flex: 1,
+                                          child: Icon(
+                                            Icons.navigate_next,
+                                            size: 20.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    onPrimary: Colors.blue,
+                                    shadowColor: Colors.blueAccent,
+                                    elevation: 5),
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return Cart_Firebase();
+                                  }));
+                                },
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: Row(
+                                            children: const [
+                                              Expanded(
+                                                flex: 1,
+                                                child: Icon(
+                                                  Icons.history,
+                                                  size: 20.0,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 5,
+                                                child: Text(
+                                                  'Cart',
                                                   style:
                                                       TextStyle(fontSize: 16),
                                                 ),

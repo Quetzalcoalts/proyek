@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:proyekambw/shopping_Payment.dart';
 import 'detMakanan.dart';
 import 'main.dart';
 
@@ -17,6 +19,8 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
+  final user = FirebaseAuth.instance.currentUser!;
+  final int uang_harga = harga;
   @override
   void initState() {
     super.initState();

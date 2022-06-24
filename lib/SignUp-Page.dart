@@ -332,6 +332,7 @@ class _SignUp_PageState extends State<SignUp_Page> {
                                 item_Email: ctr_DaftarEmail.text.toString(),
                                 item_Password:
                                     ctr_DaftarPassword.text.toString());
+                            print("aman");
                             FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                                   email: ctr_DaftarEmail.text.toString(),

@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:proyekambw/Profile-Page.dart';
 import 'package:proyekambw/SignUp-Page.dart';
 import 'package:proyekambw/cart.dart';
+import 'package:proyekambw/cart_firebase.dart';
 import 'package:proyekambw/detMakanan.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:proyekambw/filter.dart';
@@ -330,6 +331,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 signIn();
+                                print("aman2");
                               }
                             },
                             style: ButtonStyle(
@@ -375,44 +377,6 @@ class _LoginPageState extends State<LoginPage> {
             )),
       ),
     ));
-
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: [
-    //       SizedBox(height: 40),
-    //       TextField(
-    //         controller: email_Controller,
-    //         textInputAction: TextInputAction.next,
-    //         decoration: InputDecoration(labelText: "Email"),
-    //       ),
-    //       SizedBox(height: 40),
-    //       TextField(
-    //         controller: password_Controller,
-    //         textInputAction: TextInputAction.next,
-    //         decoration: InputDecoration(labelText: "Password"),
-    //       ),
-    //       ElevatedButton(
-    // onPressed: () {
-    //   signIn();
-    // },
-    // child: Text("Sign In"),
-    //       ),
-    //       ElevatedButton(
-    //           onPressed: () {
-    //             Navigator.push(
-    //               context,
-    //               MaterialPageRoute(
-    //                 builder: (context) {
-    //                   return SignUp_Page();
-    //                 },
-    //               ),
-    //             );
-    //           },
-    //           child: Text("Sign Up"))
-    //     ],
-    //   ),
-    // ),
-    //);
   }
 
   Future signIn() async {
@@ -423,14 +387,17 @@ class _LoginPageState extends State<LoginPage> {
         child: CircularProgressIndicator(),
       ),
     );
+    print("aman");
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email_Controller.text.trim(),
-          password: password_Controller.text.trim());
+          email: email_Controller.text, password: password_Controller.text);
     } on FirebaseAuthException catch (e) {
       print(e);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //   return NavBar();
+    // }));
   }
 }
 
@@ -466,6 +433,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    print(cart_nama);
     return Scaffold(
       body: Column(
         children: [
@@ -503,14 +471,19 @@ class _MyAppState extends State<MyApp> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                      child: IconButton(
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Cart();
-                            }));
-                          },
-                          icon: Icon(Icons.shopping_cart_outlined)),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return Cart_Firebase();
+                                }));
+                              },
+                              icon: Icon(Icons.shopping_cart_outlined)),
+                          Text("${cart_nama.length.toString()}")
+                        ],
+                      ),
                     ),
                   ],
                 ),
