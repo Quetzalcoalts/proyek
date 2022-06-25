@@ -14,12 +14,26 @@ class Cart_Firebase extends StatefulWidget {
 
 class _Cart_FirebaseState extends State<Cart_Firebase> {
   List<keperluan_cart> cart_trial = List.empty(growable: true);
-
+  int s = 0;
   final user = FirebaseAuth.instance.currentUser!;
+  void cektotal(List<keperluan_cart> a, int b) {
+    for (int i = 0; i < a.length; i++) {
+      b += a[i].cuang;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Future<void> _refresh() async {
     setState(() {
       Database_user.getData(user.email.toString());
+      print(' 111111 $s');
+      s = counter;
+      print('11111$s');
     });
     return Future.delayed(Duration(seconds: 3));
   }
@@ -28,25 +42,6 @@ class _Cart_FirebaseState extends State<Cart_Firebase> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: ElevatedButton(
-        onPressed: () {
-          int counter2 = counter;
-          setState(() {
-            counter2 = counter;
-            counter = 0;
-          });
-          print('Counter : $counter');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Pembayaran(
-                totaluang: counter2,
-              ),
-            ),
-          );
-        },
-        child: Text("Bayar Semua"),
-      ),
       body: RefreshIndicator(
         onRefresh: _refresh,
         child: Container(
@@ -57,42 +52,144 @@ class _Cart_FirebaseState extends State<Cart_Firebase> {
               if (snapshot.hasError) {
                 return Text("Error");
               } else if (snapshot.hasData || snapshot.data != null) {
-                return ListView.separated(
-                  itemBuilder: (BuildContext context, int index) {
-                    print("Cek : " + user.email.toString());
-                    DocumentSnapshot datas = snapshot.data!.docs[index];
-                    String Nama = datas["nama"].toString();
-                    String cdesciption = datas["description"].toString();
-                    String ccontact = datas["contact"].toString();
-                    String cemail = datas["email"].toString();
-                    int cuang = datas["uang"];
-                    cart_trial.add(keperluan_cart(
-                        cuang: cuang,
-                        cname: Nama,
-                        cdesciption: cdesciption,
-                        cemail: cemail,
-                        ccontact: ccontact));
-                    counter += cart_trial[index].cuang;
-                    return Container(
-                      child: ListTile(
-                        title: Text(Nama.toString()),
-                        subtitle: Text(cdesciption),
-                        onTap: () {
-                          print(datas["email"]);
+                s = 0;
+                counter = 0;
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: ListView.separated(
+                        itemBuilder: (BuildContext context, int index) {
+                          print("Cek : " + user.email.toString());
+                          DocumentSnapshot datas = snapshot.data!.docs[index];
+                          String Nama = datas["nama"].toString();
+                          String cdesciption = datas["description"].toString();
+                          String ccontact = datas["contact"].toString();
+                          String cemail = datas["email"].toString();
+                          int cuang = datas["uang"];
+                          cart_trial.add(keperluan_cart(
+                              cuang: cuang,
+                              cname: Nama,
+                              cdesciption: cdesciption,
+                              cemail: cemail,
+                              ccontact: ccontact));
+                          // for (int i = 0; i < cart_trial.length; i++) {
+                          //   counter += cart_trial[i].cuang;
+                          // }
+                          counter += cart_trial[index].cuang;
+                          s = counter;
+                          print('s2 : $s, c2: $counter');
+                          return Container(
+                            child: ListTile(
+                              title: Text(Nama.toString()),
+                              subtitle: Text(cdesciption),
+                              onTap: () {
+                                print(datas["email"]);
+                              },
+                              onLongPress: () {
+                                //sfinal deleteDB = keperluan_cart(cuang: cuang, cname: Nama, cdesciption: cdesciption, cemail: cemail, ccontact: ccontact)
+                                Database_user.DeleteData(
+                                    name_user01: Nama, email_user01: cemail);
+                              },
+                            ),
+                          );
                         },
-                        onLongPress: () {
-                          //sfinal deleteDB = keperluan_cart(cuang: cuang, cname: Nama, cdesciption: cdesciption, cemail: cemail, ccontact: ccontact)
-                          Database_user.DeleteData(
-                              name_user01: Nama, email_user01: cemail);
-                        },
+                        itemCount: snapshot.data!.docs.length,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            SizedBox(
+                          height: 8.0,
+                        ),
                       ),
-                    );
-                  },
-                  itemCount: snapshot.data!.docs.length,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      SizedBox(
-                    height: 8.0,
-                  ),
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                                20, 0, 0, 0),
+                                            child: Text(
+                                              "Total Harga,",
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                                20, 0, 0, 0),
+                                            child: Text("Rp. $s",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20)),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: SizedBox(
+                                  height: double.infinity,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          counter = 0;
+                                          print('s : $s, c: $counter');
+                                          for (int i = 0;
+                                              i < cart_trial.length;
+                                              i++) {
+                                            Database_user.DeleteData(
+                                                email_user01:
+                                                    user.email.toString(),
+                                                name_user01:
+                                                    cart_trial[i].cname);
+                                          }
+                                        });
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Pembayaran(
+                                              totaluang: s,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Text("Bayar Semua"),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                  ],
                 );
               }
               return Center(
