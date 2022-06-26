@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:proyekambw/class/testing_pembayaran.dart';
 import 'package:proyekambw/class/Profile.dart';
 
@@ -62,14 +63,6 @@ class Database_user {
         .catchError((e) => print("e"));
   }
 
-  // static Future<void> ubahData({required Profile_User user01}) async {
-  //   DocumentReference docref = tbl_user.doc(user01.item_Email.toString());
-  //   await docref
-  //       .update(user01.toJson())
-  //       .whenComplete(() => print("Data Berhasil Di rubah"))
-  //       .catchError((e) => print("e"));
-  // }
-
   static Future<void> DeleteData(
       {required String name_user01, required String email_user01}) async {
     CollectionReference tbl_user_shoppingcart = FirebaseFirestore.instance
@@ -82,18 +75,6 @@ class Database_user {
         .delete()
         .whenComplete(
             () => print("Data Berhasil dihapus dengan : Nama $name_user01"))
-        .catchError((e) => print("e"));
-  }
-
-  static Future<void> DeleteAllData({required String email_user01}) async {
-    CollectionReference tbl_user_shoppingcart = FirebaseFirestore.instance
-        .collection("$Profile")
-        .doc('${email_user01}')
-        .collection('ShoppingCart');
-    DocumentReference docref = tbl_user_shoppingcart.doc();
-    await docref
-        .delete()
-        .whenComplete(() => print("Data Berhasil dihapus"))
         .catchError((e) => print("e"));
   }
 }

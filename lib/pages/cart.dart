@@ -6,6 +6,7 @@ import 'package:proyekambw/services/dbservices.dart';
 import 'package:proyekambw/pages/detMakanan.dart';
 import 'package:proyekambw/pages/shopping_Payment.dart';
 import 'package:proyekambw/class/testing_pembayaran.dart';
+import '../class/Profile.dart';
 import '../main.dart';
 
 List cart_nama = [];

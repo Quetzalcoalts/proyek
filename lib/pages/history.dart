@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:proyekambw/navbar.dart';
 import 'package:proyekambw/pages/shopping_Payment.dart';
 import 'detMakanan.dart';
-import '../main.dart';
+import 'package:proyekambw/main.dart';
 
 List cart_nama = [];
 List cart_gambar = [];
@@ -42,6 +43,9 @@ class _HistoryState extends State<History> {
         appBar: AppBar(
           elevation: 0.8,
           backgroundColor: Color.fromARGB(255, 4, 162, 241),
+          title: Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Text("History Page")),
         ),
         body: ListView.builder(
             itemCount: cart_nama.length,

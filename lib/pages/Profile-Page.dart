@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:proyekambw/RefreshWidget.dart';
+import 'package:proyekambw/widget/RefreshWidget.dart';
+import 'package:proyekambw/navbar.dart';
 import 'package:proyekambw/pages/cart_firebase.dart';
+import 'package:proyekambw/pages/topup.dart';
 import 'package:proyekambw/services/dbservices.dart';
 import 'package:proyekambw/pages/detdata-changeprofile.dart';
 import 'package:proyekambw/pages/history.dart';
@@ -305,11 +307,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                     shadowColor: Colors.blueAccent,
                                     elevation: 5),
                                 onPressed: () {
+                                  final user03 = Profile_User(
+                                      item_Nama: item_Nama,
+                                      item_alamat: item_alamat,
+                                      item_noHP: item_noHP,
+                                      item_Saldo: item_Saldo,
+                                      item_ID: item_ID,
+                                      item_Email: item_Email,
+                                      item_Password: item_Password);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) {
-                                        return Pembayaran();
+                                        return PaymentTopUp(
+                                          user_topup: user03,
+                                        );
                                       },
                                     ),
                                   );

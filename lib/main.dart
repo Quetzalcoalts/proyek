@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,9 +15,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:proyekambw/pages/filter.dart';
 import 'package:proyekambw/navbar.dart';
 import 'package:proyekambw/pages/shopping_Payment.dart';
+import 'package:proyekambw/services/dbservices.dart';
+import 'class/Profile.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+final user2 = FirebaseAuth.instance.currentUser!;
 
 List nama = [];
 
@@ -394,10 +399,10 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       print(e);
     }
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
-    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //   return NavBar();
-    // }));
+    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return NavBar();
+    }));
   }
 }
 
@@ -503,13 +508,17 @@ class _MyAppState extends State<MyApp> {
                   (index) {
                     return GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return detMakanan(
-                              id: nama,
-                              item_id: index,
-                            );
-                          }));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return detMakanan(
+                                  id: nama,
+                                  item_id: index,
+                                );
+                              },
+                            ),
+                          );
                         },
                         child: Container(
                           child: Column(
