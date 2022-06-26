@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:proyekambw/Profile-Page.dart';
-import 'package:proyekambw/dbservices.dart';
+import 'package:proyekambw/pages/Profile-Page.dart';
+import 'package:proyekambw/services/dbservices.dart';
 import 'package:proyekambw/main.dart';
 import 'package:proyekambw/navbar.dart';
 
-import 'Profile.dart';
+import 'package:proyekambw/class/Profile.dart';
 
 class SignUp_Page extends StatefulWidget {
   const SignUp_Page({Key? key}) : super(key: key);

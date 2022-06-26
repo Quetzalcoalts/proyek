@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:proyekambw/testing_pembayaran.dart';
-import 'Profile.dart';
+import 'package:proyekambw/class/testing_pembayaran.dart';
+import 'package:proyekambw/class/Profile.dart';
 
 final String Profile = "Nama_User";
 

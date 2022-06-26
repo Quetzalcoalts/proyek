@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:proyekambw/shopping_Payment.dart';
+import 'package:proyekambw/pages/shopping_Payment.dart';
 import 'detMakanan.dart';
-import 'main.dart';
+import '../main.dart';
 
 List cart_nama = [];
 List cart_gambar = [];

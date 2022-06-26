@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Profile-Page.dart';
+import 'package:proyekambw/pages/Profile-Page.dart';
 import 'main.dart';
 
 class NavBar extends StatefulWidget {

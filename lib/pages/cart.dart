@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:proyekambw/dbservices.dart';
-import 'package:proyekambw/detMakanan.dart';
-import 'package:proyekambw/shopping_Payment.dart';
-import 'package:proyekambw/testing_pembayaran.dart';
-import 'main.dart';
+import 'package:proyekambw/services/dbservices.dart';
+import 'package:proyekambw/pages/detMakanan.dart';
+import 'package:proyekambw/pages/shopping_Payment.dart';
+import 'package:proyekambw/class/testing_pembayaran.dart';
+import '../main.dart';
 
 List cart_nama = [];
 List cart_gambar = [];

@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter/material.dart';
-import 'package:proyekambw/dbservices.dart';
+import 'package:proyekambw/services/dbservices.dart';
 import 'package:proyekambw/navbar.dart';
-import 'package:proyekambw/testing_pembayaran.dart';
+import 'package:proyekambw/class/testing_pembayaran.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class Pembayaran extends StatefulWidget {

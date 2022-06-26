@@ -1,5 +1,5 @@
-import 'Profile.dart';
-import 'dbservices.dart';
+import 'package:proyekambw/class/Profile.dart';
+import 'package:proyekambw/services/dbservices.dart';
 import 'package:flutter/material.dart';
 
 class detData extends StatefulWidget {

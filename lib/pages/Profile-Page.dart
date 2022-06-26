@@ -4,16 +4,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:proyekambw/RefreshWidget.dart';
-import 'package:proyekambw/cart_firebase.dart';
-import 'package:proyekambw/dbservices.dart';
-import 'package:proyekambw/detdata-changeprofile.dart';
-import 'package:proyekambw/history.dart';
+import 'package:proyekambw/pages/cart_firebase.dart';
+import 'package:proyekambw/services/dbservices.dart';
+import 'package:proyekambw/pages/detdata-changeprofile.dart';
+import 'package:proyekambw/pages/history.dart';
 import 'package:proyekambw/main.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:proyekambw/shopping_Payment.dart';
+import 'package:proyekambw/pages/shopping_Payment.dart';
 import 'package:proyekambw/widget/profile_widget.dart';
-import 'Profile.dart';
-import 'storage_files.dart';
+import 'package:proyekambw/class/Profile.dart';
+import 'package:proyekambw/services/storage_files.dart';
 import 'package:firebase_storage/firebase_storage.dart'
     as Firebase_storage_import;
 
