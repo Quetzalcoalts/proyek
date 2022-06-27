@@ -407,7 +407,8 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool? status;
+  const MyApp({Key? key, this.status}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -415,10 +416,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int selected = 0;
-
   @override
   void initState() {
     super.initState();
+
     getName();
   }
 
@@ -427,7 +428,7 @@ class _MyAppState extends State<MyApp> {
         "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
-      'X-RapidAPI-Key': 'cd0733db68mshac34562aa928537p1406b6jsn002f72f1aa0f'
+      'X-RapidAPI-Key': 'dea7a17be3msh66d0e56d23911edp19ed0cjsn41709130defd'
     });
     var items = json.decode(response.body)['feed'];
     setState(() {

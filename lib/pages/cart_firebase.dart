@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:proyekambw/pages/cart.dart';
 import 'package:proyekambw/services/dbservices.dart';
 import 'package:proyekambw/pages/shopping_Payment.dart';
 import 'package:proyekambw/class/testing_pembayaran.dart';
@@ -170,6 +171,8 @@ class _Cart_FirebaseState extends State<Cart_Firebase> {
                                                     user.email.toString(),
                                                 name_user01:
                                                     cart_trial[i].cname);
+                                            cart_gambar.clear();
+                                            cart_nama.clear();
                                           }
                                         });
                                         Navigator.push(

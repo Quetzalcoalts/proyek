@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyekambw/class/Profile.dart';
+import 'package:proyekambw/main.dart';
 import 'package:proyekambw/navbar.dart';
 import 'package:proyekambw/class/testing_pembayaran.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -32,17 +33,19 @@ class _PembayaranState extends State<Pembayaran> {
   TextEditingController textEditingController = new TextEditingController();
   late Razorpay razorpay;
   bool isdisbled = false;
+  int a = 0;
   @override
   void initState() {
     super.initState();
+    a = widget.cart?.cuang ?? widget.totaluang ?? widget.topup ?? 0 * 100;
     //print("HOUR : $now_hour");
     textEditingController.text = widget.cart?.cuang.toString() ??
         widget.totaluang?.toString() ??
         widget.topup.toString();
     razorpay = new Razorpay();
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerErrorFailure);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
   @override
@@ -60,8 +63,9 @@ class _PembayaranState extends State<Pembayaran> {
       "name": widget.cart?.cname ?? "",
       "description": widget.cart?.cdesciption ?? "",
       "prefill": {
-        "contact": "${widget.cart?.ccontact ?? ""}",
-        "email": "${widget.cart?.cemail ?? ""}"
+        "contact": "${widget.cart?.ccontact ?? "081111111111"}",
+        "email":
+            "${widget.cart?.cemail ?? widget.user02?.item_Email.toString()}"
       },
       "external": {
         "wallets": ["paytm"]
@@ -93,23 +97,45 @@ class _PembayaranState extends State<Pembayaran> {
     ));
   }
 
-  void handlerPaymentSuccess() {
-    print("Payment success");
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    print('Success Response: $response');
+    if (widget.user02 != null && a != null) {
+      int b = int.parse(widget.user02!.item_Saldo);
+      widget.user02!.item_Saldo = (a + b).toString();
+      Database.ubahData(user01: widget.user02!);
+    } else {
+      print("b");
+      Database_user.DeleteData(
+          name_user01: widget.cart!.cname.toString(),
+          email_user01: widget.cart!.cemail.toString());
+    }
+
+    Kembalikerumah(true);
+    /*Fluttertoast.showToast(
+        msg: "SUCCESS: " + response.paymentId!,
+        toastLength: Toast.LENGTH_SHORT); */
   }
 
-  void handlerErrorFailure() {
-    print("Payment error");
-    notif("Payment error");
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print('Error Response: $response');
+    Kembalikerumah(false);
+    /* Fluttertoast.showToast(
+        msg: "ERROR: " + response.code.toString() + " - " + response.message!,
+        toastLength: Toast.LENGTH_SHORT); */
   }
 
-  void handlerExternalWallet() {
-    print("External Wallet");
-    notif("External Wallet");
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    print('External SDK Response: $response');
+    /* Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: " + response.walletName!,
+        toastLength: Toast.LENGTH_SHORT); */
   }
 
-  void Kembalikerumah() {
+  void Kembalikerumah(bool x) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return NavBar();
+      return NavBar(
+        x1: x,
+      );
     }));
   }
 
@@ -117,7 +143,7 @@ class _PembayaranState extends State<Pembayaran> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Razor Pay"),
+          title: Text("Razor Pay Pembayaran"),
         ),
         body: Padding(
             padding: const EdgeInsets.all(30.0),
@@ -126,7 +152,7 @@ class _PembayaranState extends State<Pembayaran> {
                 TextField(
                   controller: textEditingController,
                   enabled: isdisbled,
-                  decoration: InputDecoration(hintText: "Amount"),
+                  decoration: InputDecoration(hintText: "Jumlah"),
                 ),
                 SizedBox(
                   height: 12,
@@ -138,18 +164,18 @@ class _PembayaranState extends State<Pembayaran> {
                   ),
                   onPressed: () {
                     openCheckout();
-                    notif("Payment success");
-                    if (widget.cart == null && widget.cart_list != null) {
-                      print("A0");
-                      for (int i = 0; i < widget.cart_list!.length; i++)
-                        Database.DeleteData(
-                            Nama_user01: widget.cart_list![i].cname);
-                    } else {
-                      Database_user.DeleteData(
-                          name_user01: widget.cart!.cname,
-                          email_user01: widget.cart!.cname);
-                    }
-                    Kembalikerumah();
+                    // notif("Payment success");
+                    // if (widget.cart == null && widget.cart_list != null) {
+                    //   print("A0");
+                    //   for (int i = 0; i < widget.cart_list!.length; i++)
+                    //     Database.DeleteData(
+                    //         Nama_user01: widget.cart_list![i].cname);
+                    // } else {
+                    //   Database_user.DeleteData(
+                    //       name_user01: widget.cart!.cname,
+                    //       email_user01: widget.cart!.cname);
+                    // }
+                    // Kembalikerumah();
                   },
                 )
               ],

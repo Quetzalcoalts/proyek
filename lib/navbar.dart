@@ -16,19 +16,35 @@ import 'main.dart';
 //     item_Password: "item_Password");
 
 class NavBar extends StatefulWidget {
-  const NavBar({Key? key}) : super(key: key);
+  final bool? x1;
+  const NavBar({Key? key, this.x1}) : super(key: key);
 
   @override
   State<NavBar> createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
+  late final screen_navbar;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.x1 != null) {
+      screen_navbar = [
+        MyApp(
+          status: widget.x1,
+        ),
+        const ProfilePage(),
+      ];
+    } else {
+      screen_navbar = [
+        const MyApp(),
+        //LoginPage(),
+        const ProfilePage(),
+      ];
+    }
+  }
+
   int current_index_navbar = 0;
-  final screen_navbar = [
-    const MyApp(),
-    //LoginPage(),
-    const ProfilePage(),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

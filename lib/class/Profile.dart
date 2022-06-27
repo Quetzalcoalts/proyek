@@ -5,7 +5,7 @@ class Profile_User {
   final String item_Nama;
   final String item_alamat;
   final String item_noHP;
-  final String item_Saldo;
+  String item_Saldo;
   final String item_Email;
   final String item_Password;
 
