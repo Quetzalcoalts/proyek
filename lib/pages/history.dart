@@ -9,6 +9,8 @@ import 'package:proyekambw/main.dart';
 
 List cart_nama = [];
 List cart_gambar = [];
+List cart_nama_historyfirebase = [];
+List cart_gambar_historyfirebase = [];
 
 class History extends StatefulWidget {
   final List? id;
@@ -33,6 +35,10 @@ class _HistoryState extends State<History> {
       if (widget.item_id != null) {
         cart_nama.add(widget.id?[widget.item_id!]['display']['displayName']);
         cart_gambar.add(widget.id?[widget.item_id!]['display']['images'][0]);
+        cart_nama_historyfirebase
+            .add(widget.id?[widget.item_id!]['display']['displayName']);
+        cart_gambar_historyfirebase
+            .add(widget.id?[widget.item_id!]['display']['images'][0]);
       }
     });
   }

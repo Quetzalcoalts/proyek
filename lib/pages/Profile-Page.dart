@@ -89,12 +89,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                         shadowColor: Colors.blueAccent,
                                         elevation: 5),
                                     onPressed: () {
-                                      FirebaseAuth.instance.signOut();
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginPage()));
+                                      showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title: const Text('LogOut'),
+                                          content: const Text('Yakin Log Out?'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  context, 'Cancel'),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                FirebaseAuth.instance.signOut();
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LoginPage(),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text('LogOut'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                      // FirebaseAuth.instance.signOut();
                                     },
                                     child: Container(
                                       child: Row(

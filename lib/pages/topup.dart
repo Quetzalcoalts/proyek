@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:proyekambw/class/Profile.dart';
+import 'package:proyekambw/main.dart';
 import 'package:proyekambw/navbar.dart';
+import 'package:proyekambw/pages/history.dart';
 import 'package:proyekambw/pages/shopping_Payment.dart';
 import 'package:proyekambw/services/dbservices.dart';
 
 import '../navbar.dart';
+import 'detMakanan.dart';
 
 class PaymentTopUp extends StatefulWidget {
   final Profile_User? user_topup;
@@ -26,10 +29,10 @@ class _PaymentTopUpState extends State<PaymentTopUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: RefreshIndicator(
-      onRefresh: _refresh,
-      child: SingleChildScrollView(
-        child: Column(children: <Widget>[
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: SingleChildScrollView(
+            child: Column(children: <Widget>[
           Stack(
             children: <Widget>[
               Column(
@@ -266,65 +269,78 @@ class _PaymentTopUpState extends State<PaymentTopUp> {
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 2,
-            children: List.generate(
-              10,
-              (index) {
-                return Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Material(
-                    borderRadius: BorderRadiusDirectional.circular(15),
-                    elevation: 5,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadiusDirectional.circular(15)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            ),
-                            child: Image.network(
-                              "https://image.freepik.com/free-vector/square-food-banner-with-photo_23-2148118766.jpg",
-                              fit: BoxFit.cover,
-                              // height: 150,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              child: Text("Article Title Here",
-                                  style: TextStyle(fontSize: 15)),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.calendar_today,
-                                  size: 15,
+            children: List.generate(cart_nama_historyfirebase.length, (index) {
+              return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return detMakanan(id: nama, item_id: index);
+                    }));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Material(
+                      borderRadius: BorderRadiusDirectional.circular(15),
+                      elevation: 5,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadiusDirectional.circular(15)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 5,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
                                 ),
-                                SizedBox(width: 5),
-                                Text("1 min read",
-                                    style: TextStyle(fontSize: 15)),
-                              ],
+                                child: Image.network(
+                                  cart_gambar_historyfirebase[index],
+                                  //"https://image.freepik.com/free-vector/square-food-banner-with-photo_23-2148118766.jpg",
+                                  height: 100,
+                                  width: 100,
+                                ),
+                              ),
                             ),
-                          )
-                        ],
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  child: Text(cart_nama[index],
+                                      style: TextStyle(fontSize: 15)),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 6.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.calendar_today,
+                                      size: 15,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text("1 min read",
+                                        style: TextStyle(fontSize: 15)),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ]),
+                  ));
+            }),
+          )
+        ])),
       ),
-    ));
+    );
   }
 }
