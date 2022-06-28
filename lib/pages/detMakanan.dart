@@ -8,7 +8,6 @@ import 'package:proyekambw/pages/cart.dart';
 import 'package:proyekambw/pages/history.dart';
 import 'package:proyekambw/class/testing_pembayaran.dart';
 import 'package:proyekambw/services/dbservices.dart';
-
 import '../main.dart';
 import 'cart.dart';
 
@@ -25,6 +24,19 @@ class detMakanan extends StatefulWidget {
 
 class _detMakananState extends State<detMakanan> {
   final user = FirebaseAuth.instance.currentUser!;
+  @override
+  void initState() {
+    super.initState();
+    refresh();
+  }
+
+  void refresh(){
+    listindex.add(widget.item_id);
+    cart_namah.add(widget.id![widget.item_id!]['display']['displayName']);
+    cart_gambarh.add(widget.id![widget.item_id!]['display']['images'][0]);
+    listasli.add(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +132,7 @@ class _detMakananState extends State<detMakanan> {
                                       color: Colors.yellow,
                                     ),
                                     Text(
-                                      "${widget.id![widget.item_id!]['content']['reviews'] != null ? widget.id![widget.item_id!]['content']['reviews']['averageRating'] != null ? widget.id![widget.item_id!]['content']['reviews']['averageRating'] : "3" : "3"}",
+                                      "${widget.id![widget.item_id!]['content']['reviews'] != null ? widget.id![widget.item_id!]['content']['reviews']['averageRating'] == null ? "3" : widget.id![widget.item_id!]['content']['reviews']['averageRating'] : "3"}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,
@@ -270,15 +282,7 @@ class _detMakananState extends State<detMakanan> {
                                       width: 237,
                                       height: 50,
                                       child: FlatButton(
-                                          onPressed: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return History(
-                                                  id: widget.id,
-                                                  item_id: widget.item_id);
-                                            }));
-                                          },
+                                          onPressed: () {},
                                           child: Text(
                                             "BUY NOW",
                                             style: TextStyle(fontSize: 17),

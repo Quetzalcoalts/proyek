@@ -7,15 +7,14 @@ import 'package:proyekambw/pages/shopping_Payment.dart';
 import 'detMakanan.dart';
 import 'package:proyekambw/main.dart';
 
-List cart_nama = [];
-List cart_gambar = [];
-List cart_nama_historyfirebase = [];
-List cart_gambar_historyfirebase = [];
+List cart_namah = [];
+List cart_gambarh = [];
+List listindex = [];
+List listasli = [];
+int count = 0;
 
 class History extends StatefulWidget {
-  final List? id;
-  final int? item_id;
-  const History({Key? key, this.id, this.item_id}) : super(key: key);
+  const History({Key? key}) : super(key: key);
 
   @override
   State<History> createState() => _HistoryState();
@@ -27,20 +26,6 @@ class _HistoryState extends State<History> {
   @override
   void initState() {
     super.initState();
-    initial();
-  }
-
-  void initial() {
-    setState(() {
-      if (widget.item_id != null) {
-        cart_nama.add(widget.id?[widget.item_id!]['display']['displayName']);
-        cart_gambar.add(widget.id?[widget.item_id!]['display']['images'][0]);
-        cart_nama_historyfirebase
-            .add(widget.id?[widget.item_id!]['display']['displayName']);
-        cart_gambar_historyfirebase
-            .add(widget.id?[widget.item_id!]['display']['images'][0]);
-      }
-    });
   }
 
   @override
@@ -54,46 +39,38 @@ class _HistoryState extends State<History> {
               child: Text("History Page")),
         ),
         body: ListView.builder(
-            itemCount: cart_nama.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return detMakanan(id: widget.id!, item_id: widget.item_id!);
-                  }));
-                },
-                child: Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                              padding: EdgeInsets.all(8),
-                              color: Colors.white,
-                              height: 200,
-                              width: 410,
-                              child: Image.network(
-                                cart_gambar[index],
-                                fit: BoxFit.fill,
-                              )),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.fromLTRB(10, 8, 0, 10),
-                                  child: Text(cart_nama[index])),
-                            ],
+          itemCount: cart_namah.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return detMakanan(id: nama, item_id: index);
+                }));
+              },
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Card(
+                      child: ListTile(
+                        leading: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minWidth: 44,
+                            minHeight: 44,
+                            maxWidth: 64,
+                            maxHeight: 64,
                           ),
-                        ],
+                          child: Image.network(cart_gambarh[index], fit: BoxFit.cover),
+                        ),
+                        title: Text(cart_namah[index]),
                       ),
-                    ],
-                  ),
+                    ),
+                  ]
                 ),
-              );
-            }));
+              ),
+            );
+          }
+        )
+    ); 
   }
 }
