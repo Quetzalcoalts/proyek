@@ -33,13 +33,13 @@ class _NavBarState extends State<NavBar> {
         MyApp(
           status: widget.x1,
         ),
-        // const ProfilePage(),
+        const ProfilePage(),
       ];
     } else {
       screen_navbar = [
         const MyApp(),
         //LoginPage(),
-        // const ProfilePage(),
+        const ProfilePage(),
       ];
     }
   }

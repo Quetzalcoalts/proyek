@@ -25,7 +25,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 final user2 = FirebaseAuth.instance.currentUser!;
 
-List nama = [];
+List nama = List.empty(growable: true);
 
 Color _primaryColor = HexColor('#2596be');
 Color _accentColor = HexColor('#2596be');
@@ -45,9 +45,84 @@ Future<void> main() async {
       colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey)
           .copyWith(secondary: _accentColor),
     ),
-    home: MainPage(),
+    home: SplashScreen(),
     //home: Home(),
   ));
+}
+
+class SplashScreen extends StatefulWidget {
+  SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  bool _isVisible = false;
+
+  _SplashScreenState() {
+    new Timer(const Duration(seconds: 4), () {
+      setState(() {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => MainPage()),
+            (route) => false);
+      });
+    });
+
+    new Timer(Duration(seconds: 2), () {
+      setState(() {
+        _isVisible =
+            true; // Now it is showing fade effect and navigating to Login page
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: new BoxDecoration(
+        gradient: new LinearGradient(
+          colors: [
+            Theme.of(context).primaryColorLight,
+            Theme.of(context).primaryColorDark
+          ],
+          begin: const FractionalOffset(0, 0),
+          end: const FractionalOffset(1.0, 0.0),
+          stops: [0.0, 1.0],
+          tileMode: TileMode.clamp,
+        ),
+      ),
+      child: AnimatedOpacity(
+        opacity: _isVisible ? 1.0 : 0,
+        duration: Duration(milliseconds: 1200),
+        child: Center(
+          child: Container(
+            height: 140.0,
+            width: 140.0,
+            child: Center(
+              child: ClipOval(
+                child: Icon(
+                  Icons.shop,
+                  size: 128,
+                ), //put your logo here
+              ),
+            ),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 2.0,
+                    offset: Offset(5.0, 3.0),
+                    spreadRadius: 2.0,
+                  )
+                ]),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class MainPage extends StatefulWidget {
@@ -59,26 +134,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool _isVisible = false;
-  @override
-  _MainPageState() {
-    // new Timer(const Duration(milliseconds: 2000), () {
-    //   setState(() {
-    //     Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => MyApp(),
-    //       ),
-    //     );
-    //   });
-    // });
-
-    // new Timer(Duration(milliseconds: 10), () {
-    //   setState(() {
-    //     _isVisible =
-    //         true; // Now it is showing fade effect and navigating to Login page
-    //   });
-    // });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +142,6 @@ class _MainPageState extends State<MainPage> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            // return Center(
-            //   //child: CircularProgressIndicator(),
-
-            // );
             print('Loading...');
             return Center();
           } else if (snapshot.hasError) {
@@ -98,69 +149,11 @@ class _MainPageState extends State<MainPage> {
               child: Text("Something was Wrong"),
             );
           } else if (snapshot.hasData) {
+            print("masuk di navbar");
             return NavBar();
           } else {
+            print("masuk di login");
             return LoginPage();
-            //return Center(child: CircularProgressIndicator());
-            //return MyApp();
-            // return Container(
-            //   decoration: new BoxDecoration(
-            //     gradient: new LinearGradient(
-            //       colors: [
-            //         Theme.of(context).accentColor,
-            //         Theme.of(context).primaryColor
-            //       ],
-            //       begin: const FractionalOffset(0, 0),
-            //       end: const FractionalOffset(1.0, 0.0),
-            //       stops: [0.0, 1.0],
-            //       tileMode: TileMode.clamp,
-            //     ),
-            //   ),
-            //   child: AnimatedOpacity(
-            //     opacity: _isVisible ? 1.0 : 0,
-            //     duration: Duration(milliseconds: 1200),
-            //     child: Center(
-            //       child: Container(
-            //         height: 140.0,
-            //         width: 140.0,
-            //         child: Center(
-            //           child: Column(
-            //             children: const [
-            //               ClipOval(
-            //                 child: Icon(
-            //                   Icons.shopping_bag,
-            //                   size: 128,
-            //                 ), //put your logo here
-            //               ),
-            //               // SizedBox(
-            //               //   height: 50,
-            //               // ),
-            //               // Text(
-            //               //   "MY FOOD",
-            //               //   style: TextStyle(
-            //               //       fontSize: 24,
-            //               //       fontStyle: FontStyle.italic,
-            //               //       fontWeight: FontWeight.bold),
-            //               // )
-            //             ],
-            //           ),
-            //         ),
-            //         decoration: BoxDecoration(
-            //             shape: BoxShape.circle,
-            //             color: Colors.white,
-            //             boxShadow: [
-            //               BoxShadow(
-            //                 color: Colors.black.withOpacity(0.3),
-            //                 blurRadius: 2.0,
-            //                 offset: Offset(5.0, 3.0),
-            //                 spreadRadius: 2.0,
-            //               )
-            //             ]),
-            //       ),
-            //     ),
-            //   ),
-            // );
-
           }
         },
       ),
@@ -420,9 +413,8 @@ class _MyAppState extends State<MyApp> {
   int selected = 0;
   @override
   void initState() {
-    super.initState();
-
     getName();
+    super.initState();
   }
 
   getName() async {
@@ -432,13 +424,13 @@ class _MyAppState extends State<MyApp> {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
       'X-RapidAPI-Key': 'dea7a17be3msh66d0e56d23911edp19ed0cjsn41709130defd'
     });
-    var items = json.decode(response.body)['feed'];
-    setState(() {
-      nama = items;
-    });
+    var items = await json.decode(response.body)['feed'];
+    //setState(() {
+    nama = items;
+    //});
   }
 
-  Convert(var a){
+  Convert(var a) {
     var b = double.parse(a).round();
     return b.toString();
   }
@@ -466,8 +458,9 @@ class _MyAppState extends State<MyApp> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
                             return Menu();
                           }));
                         },
@@ -536,9 +529,8 @@ class _MyAppState extends State<MyApp> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10)
-                          ),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10)),
                           child: Column(
                             children: [
                               Container(
@@ -575,32 +567,57 @@ class _MyAppState extends State<MyApp> {
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Container(
-                                          padding: EdgeInsets.fromLTRB(10, 0, 8, 8),
-                                          child: const Icon(Icons.star,color: Colors.yellow, size: 18,),
+                                          padding:
+                                              EdgeInsets.fromLTRB(10, 0, 8, 8),
+                                          child: const Icon(
+                                            Icons.star,
+                                            color: Colors.yellow,
+                                            size: 18,
+                                          ),
                                         ),
                                         Container(
-                                          padding: EdgeInsets.fromLTRB(0, 0, 8, 8),
-                                          child: Text(nama[index]['content']['reviews'] != null ? nama[index]['content']['reviews']['averageRating'] == null ? "3" : Convert(nama[index]['content']['reviews']['averageRating'].toString()) : "3" )
-                                        ),
+                                            padding:
+                                                EdgeInsets.fromLTRB(0, 0, 8, 8),
+                                            child: Text(nama[index]['content']
+                                                        ['reviews'] !=
+                                                    null
+                                                ? nama[index]['content']
+                                                                ['reviews']
+                                                            ['averageRating'] ==
+                                                        null
+                                                    ? "3"
+                                                    : Convert(nama[index]
+                                                                    ['content']
+                                                                ['reviews']
+                                                            ['averageRating']
+                                                        .toString())
+                                                : "3")),
                                         Padding(
-                                          padding: const EdgeInsets.fromLTRB(85, 0, 0, 5),
+                                          padding: const EdgeInsets.fromLTRB(
+                                              85, 0, 0, 5),
                                           child: Container(
-                                            width: 30,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                              color: Colors.blue,
-                                              borderRadius: BorderRadius.circular(20)
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.fromLTRB(4, 8, 0, 0),
-                                              child: Text("50K",
-                                              style: TextStyle(fontSize: 12, color: Colors.white),
-                                              ),
-                                            )
-                                          ),
+                                              width: 30,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.blue,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        4, 8, 0, 0),
+                                                child: Text(
+                                                  "50K",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.white),
+                                                ),
+                                              )),
                                         ),
                                       ],
                                     ),
