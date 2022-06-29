@@ -73,6 +73,7 @@ class _PembayaranState extends State<Pembayaran> {
     //   }
     // };
     print("Hello : ${user_global.item_Email}");
+    print("Hello2 : ${user_global.item_noHP}");
     var options = {
       "key": "rzp_test_5YplbLeCMxKCEl",
       "amount": a * 100,
@@ -114,12 +115,16 @@ class _PembayaranState extends State<Pembayaran> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print('Success Response: $response');
+    late final snackBar;
     int saldoawal = 0;
     if (widget.user02 != null && a != null) {
       saldoawal = int.parse(widget.user02!.item_Saldo);
       int b = int.parse(widget.user02!.item_Saldo);
       widget.user02!.item_Saldo = (a + b).toString();
       Database.ubahData(user01: widget.user02!);
+      snackBar = SnackBar(
+        content: Text("Saldo Terbaru ${widget.user02}"),
+      );
     } else if (widget.cart != null) {
       saldoawal = int.parse(user_global.item_Saldo);
       Database_user.DeleteData(
@@ -133,6 +138,22 @@ class _PembayaranState extends State<Pembayaran> {
 
       print("Global Saldo ${user_global.item_Saldo}");
 
+      snackBar = SnackBar(
+        content: Text(
+            'Pembayaran Berhasil!, Sisa Saldo Anda ${user_global.item_Saldo}'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            user_global.item_Saldo = saldoawal.toString();
+
+            Database.ubahData(user01: user_global);
+            final snakbar2 = SnackBar(content: Text("Oke, berhasil di Undo"));
+
+            ScaffoldMessenger.of(context).showSnackBar(snakbar2);
+            // Some code to undo the change.
+          },
+        ),
+      );
       //detele saldo
     } else {
       saldoawal = int.parse(user_global.item_Saldo);
@@ -149,31 +170,14 @@ class _PembayaranState extends State<Pembayaran> {
       cart_gambar.clear();
       Database.ubahData(user01: user_global);
       cart_nama.clear();
+
+      snackBar = SnackBar(
+        content: Text(
+            'Pembayaran Berhasil!, Sisa Saldo Anda ${user_global.item_Saldo}'),
+      );
     }
-    final snackBar = SnackBar(
-      content: Text(
-          'Pembayaran Berhasil!, Sisa Saldo Anda ${user_global.item_Saldo}'),
-      action: SnackBarAction(
-        label: 'Undo',
-        onPressed: () {
-          user_global.item_Saldo = saldoawal.toString();
-
-          Database.ubahData(user01: user_global);
-          final snakbar2 = SnackBar(content: Text("Oke, berhasil di Undo"));
-
-          ScaffoldMessenger.of(context).showSnackBar(snakbar2);
-          // Some code to undo the change.
-        },
-      ),
-    );
-
-    // Find the ScaffoldMessenger in the widget tree
-    // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     //Kembalikerumah(true);
-    /*Fluttertoast.showToast(
-        msg: "SUCCESS: " + response.paymentId!,
-        toastLength: Toast.LENGTH_SHORT); */
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
