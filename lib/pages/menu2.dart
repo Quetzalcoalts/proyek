@@ -50,7 +50,7 @@ class _Menu2State extends State<Menu2> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text("Desserts", 
-                      style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold, fontFamily: 'Glinny'),
                       ),
                     )
                   ],

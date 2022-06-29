@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:proyekambw/pages/menu2.dart';
 
 List burger = [];
-int limit = 5;
+int limit = 6;
 
 class Menu3 extends StatefulWidget {
   const Menu3({ Key? key }) : super(key: key);
@@ -54,8 +54,11 @@ class _Menu3State extends State<Menu3> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("Burger", 
-                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 35, left: 18),
+                          child: Text("Burger", 
+                          style: TextStyle(fontSize: 75, fontWeight: FontWeight.bold, fontFamily: 'Glinny'),
+                          ),
                         )
                       ],
                     )
@@ -72,8 +75,9 @@ class _Menu3State extends State<Menu3> {
           Row(
             children: [
               Container(
+                padding: EdgeInsets.only(left: 16),
                 width: 411,
-                height: 40,
+                height: 30,
                 child: Text("Price List",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -82,7 +86,7 @@ class _Menu3State extends State<Menu3> {
           ),
           Container(
             width: 411,
-            height: 360,
+            height: 375,
             child: Column(
               children: [
                 Expanded(
@@ -91,7 +95,7 @@ class _Menu3State extends State<Menu3> {
                     itemBuilder: (context, index){
                       return ListTile(
                         title: Text("${burger[index]['name']}",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                         ),
                         subtitle: Container(
                           width: 350,
@@ -124,7 +128,7 @@ class _Menu3State extends State<Menu3> {
           ),
           Container(
             width: 411,
-            height: 53,
+            height: 48,
             child: Column(
               children: [
                 Row(

@@ -96,5 +96,8 @@ flutter:
     - family:  MyFlutterApp
       fonts:
         - asset: asset/font/MyFlutterApp.ttf
+    - family:  Glinny
+      fonts:
+        - asset: asset/font/GlinyScript.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
