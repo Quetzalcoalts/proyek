@@ -8,6 +8,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../services/dbservices.dart';
+import 'cart.dart';
 
 class Pembayaran extends StatefulWidget {
   final Profile_User? user02;
@@ -16,14 +17,14 @@ class Pembayaran extends StatefulWidget {
   final int? totaluang;
   //top up
   final int? topup;
-  const Pembayaran(
-      {Key? key,
-      this.cart,
-      this.cart_list,
-      this.totaluang,
-      this.user02,
-      this.topup})
-      : super(key: key);
+  const Pembayaran({
+    Key? key,
+    this.cart,
+    this.cart_list,
+    this.totaluang,
+    this.user02,
+    this.topup,
+  }) : super(key: key);
   @override
   _PembayaranState createState() => _PembayaranState();
 }
@@ -103,14 +104,33 @@ class _PembayaranState extends State<Pembayaran> {
       int b = int.parse(widget.user02!.item_Saldo);
       widget.user02!.item_Saldo = (a + b).toString();
       Database.ubahData(user01: widget.user02!);
-    } else {
-      print("b");
+    } else if (widget.cart != null) {
       Database_user.DeleteData(
           name_user01: widget.cart!.cname.toString(),
           email_user01: widget.cart!.cemail.toString());
+    } else {
+      for (int i = 0; i < widget.cart_list!.length; i++) {
+        Database_user.DeleteData(
+            email_user01: user.email.toString(),
+            name_user01: widget.cart_list![i].cname);
+        cart_gambar.clear();
+        cart_nama.clear();
+      }
     }
+    final snackBar = SnackBar(
+      content: const Text('Yay! A SnackBar!'),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
 
-    Kembalikerumah(true);
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    //Kembalikerumah(true);
     /*Fluttertoast.showToast(
         msg: "SUCCESS: " + response.paymentId!,
         toastLength: Toast.LENGTH_SHORT); */
@@ -118,7 +138,7 @@ class _PembayaranState extends State<Pembayaran> {
 
   void _handlePaymentError(PaymentFailureResponse response) {
     print('Error Response: $response');
-    Kembalikerumah(false);
+    //Kembalikerumah(false);
     /* Fluttertoast.showToast(
         msg: "ERROR: " + response.code.toString() + " - " + response.message!,
         toastLength: Toast.LENGTH_SHORT); */
@@ -180,5 +200,38 @@ class _PembayaranState extends State<Pembayaran> {
                 )
               ],
             )));
+  }
+}
+
+class SnackBarPage extends StatefulWidget {
+  const SnackBarPage({Key? key}) : super(key: key);
+
+  @override
+  State<SnackBarPage> createState() => _SnackBarPageState();
+}
+
+class _SnackBarPageState extends State<SnackBarPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          final snackBar = SnackBar(
+            content: const Text('Yay! A SnackBar!'),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                // Some code to undo the change.
+              },
+            ),
+          );
+
+          // Find the ScaffoldMessenger in the widget tree
+          // and use it to show a SnackBar.
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        },
+        child: const Text('Show SnackBar'),
+      ),
+    );
   }
 }

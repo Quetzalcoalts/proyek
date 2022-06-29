@@ -30,7 +30,7 @@ class _detMakananState extends State<detMakanan> {
     refresh();
   }
 
-  void refresh(){
+  void refresh() {
     listindex.add(widget.item_id);
     cart_namah.add(widget.id![widget.item_id!]['display']['displayName']);
     cart_gambarh.add(widget.id![widget.item_id!]['display']['images'][0]);
@@ -63,7 +63,7 @@ class _detMakananState extends State<detMakanan> {
                             topRight: Radius.circular(30),
                           )),
                       margin: EdgeInsets.only(top: 203),
-                      height: 400,
+                      height: 485,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),

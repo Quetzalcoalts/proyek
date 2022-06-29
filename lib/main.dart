@@ -16,6 +16,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:proyekambw/pages/filter.dart';
 import 'package:proyekambw/navbar.dart';
 import 'package:proyekambw/pages/menu.dart';
+import 'package:proyekambw/pages/menu2.dart';
+import 'package:proyekambw/pages/menu3.dart';
 import 'package:proyekambw/pages/shopping_Payment.dart';
 import 'package:proyekambw/services/dbservices.dart';
 import 'class/Profile.dart';
@@ -422,7 +424,7 @@ class _MyAppState extends State<MyApp> {
         "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
-      'X-RapidAPI-Key': '09ec052f70msh5ffdd85416e6d80p1133e9jsne8e33e519ec5'
+      'X-RapidAPI-Key': '53f044d9cdmshf265e6686f46e6fp1e9053jsn271b48445962'
     });
     var items = await json.decode(response.body)['feed'];
     setState(() {

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:proyekambw/widget/RefreshWidget.dart';
 import 'package:proyekambw/navbar.dart';
 import 'package:proyekambw/pages/cart_firebase.dart';
@@ -48,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
             const Text("Profile"),
           ],
         ),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: HexColor('#2596be'),
       ),
       body: RefreshIndicator(
         onRefresh: _refresh,

@@ -180,6 +180,7 @@ class _Cart_FirebaseState extends State<Cart_Firebase> {
                                           MaterialPageRoute(
                                             builder: (context) => Pembayaran(
                                               totaluang: s,
+                                              cart_list: cart_trial,
                                             ),
                                           ),
                                         );
