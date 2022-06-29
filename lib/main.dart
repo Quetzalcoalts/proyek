@@ -422,7 +422,7 @@ class _MyAppState extends State<MyApp> {
         "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
-      'X-RapidAPI-Key': '15944e2e9amshcd61c9da0ef21d9p1dfa39jsn528344bcd853'
+      'X-RapidAPI-Key': '09ec052f70msh5ffdd85416e6d80p1133e9jsne8e33e519ec5'
     });
     var items = await json.decode(response.body)['feed'];
     setState(() {

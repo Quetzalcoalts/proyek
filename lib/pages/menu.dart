@@ -29,14 +29,12 @@ class _MenuState extends State<Menu> {
     // try {
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'pizza-and-desserts.p.rapidapi.com',
-      'X-RapidAPI-Key': '15944e2e9amshcd61c9da0ef21d9p1dfa39jsn528344bcd853'
+      'X-RapidAPI-Key': '09ec052f70msh5ffdd85416e6d80p1133e9jsne8e33e519ec5'
     });
     var items = json.decode(response.body);
     setState(() {
       pizza = items;
     });
-
-    print(pizza);
   }
 
   @override
