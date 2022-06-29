@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Profile_User {
-  final String item_ID;
-  final String item_Nama;
-  final String item_alamat;
-  final String item_noHP;
+  String item_ID;
+  String item_Nama;
+  String item_alamat;
+  String item_noHP;
   String item_Saldo;
-  final String item_Email;
-  final String item_Password;
+  String item_Email;
+  String item_Password;
 
   Profile_User({
     required this.item_Nama,

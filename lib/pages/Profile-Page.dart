@@ -20,6 +20,8 @@ import 'package:proyekambw/services/storage_files.dart';
 import 'package:firebase_storage/firebase_storage.dart'
     as Firebase_storage_import;
 
+late Profile_User user_global;
+
 class ProfilePage extends StatefulWidget {
   final Profile_User? dataUser;
   const ProfilePage({Key? key, this.dataUser}) : super(key: key);
@@ -73,6 +75,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   // _jumlah = snapshot.data!.docs.length;
 
                   if (item_Email == user.email) {
+                    Profile_User ax = Profile_User(
+                        item_Nama: item_Nama,
+                        item_alamat: item_alamat,
+                        item_noHP: item_noHP,
+                        item_Saldo: item_Saldo,
+                        item_ID: item_ID,
+                        item_Email: item_Email,
+                        item_Password: item_Password);
+                    user_global = ax;
                     return SingleChildScrollView(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(

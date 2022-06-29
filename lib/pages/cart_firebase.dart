@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:proyekambw/pages/Profile-Page.dart';
 import 'package:proyekambw/pages/cart.dart';
 import 'package:proyekambw/services/dbservices.dart';
 import 'package:proyekambw/pages/shopping_Payment.dart';
@@ -85,7 +86,7 @@ class _Cart_FirebaseState extends State<Cart_Firebase> {
                           return Container(
                             child: ListTile(
                               title: Text(Nama.toString()),
-                              subtitle: Text(cdesciption),
+                              subtitle: Text(cuang.toString()),
                               onTap: () {
                                 print(datas["email"]);
                               },
@@ -163,18 +164,9 @@ class _Cart_FirebaseState extends State<Cart_Firebase> {
                                         setState(() {
                                           counter = 0;
                                           print('s : $s, c: $counter');
-                                          for (int i = 0;
-                                              i < cart_trial.length;
-                                              i++) {
-                                            Database_user.DeleteData(
-                                                email_user01:
-                                                    user.email.toString(),
-                                                name_user01:
-                                                    cart_trial[i].cname);
-                                            cart_gambar.clear();
-                                            cart_nama.clear();
-                                          }
                                         });
+                                        print(
+                                            "Cek Profile : ${user_global.item_alamat}");
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(

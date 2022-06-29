@@ -4,6 +4,7 @@ import 'package:proyekambw/class/Profile.dart';
 import 'package:proyekambw/main.dart';
 import 'package:proyekambw/navbar.dart';
 import 'package:proyekambw/class/testing_pembayaran.dart';
+import 'package:proyekambw/pages/Profile-Page.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -38,11 +39,11 @@ class _PembayaranState extends State<Pembayaran> {
   @override
   void initState() {
     super.initState();
-    a = widget.cart?.cuang ?? widget.totaluang ?? widget.topup ?? 0 * 100;
+    a = widget.cart?.cuang ?? widget.totaluang ?? widget.topup ?? 0;
+    print('di shopping payment');
+    print(a);
     //print("HOUR : $now_hour");
-    textEditingController.text = widget.cart?.cuang.toString() ??
-        widget.totaluang?.toString() ??
-        widget.topup.toString();
+    textEditingController.text = a.toString();
     razorpay = new Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
@@ -57,16 +58,29 @@ class _PembayaranState extends State<Pembayaran> {
   }
 
   void openCheckout() {
+    // var options = {
+    //   "key": "rzp_test_5YplbLeCMxKCEl",
+    //   "amount": a * 100,
+    //   "name": widget.cart?.cname ?? "",
+    //   "description": widget.cart?.cdesciption ?? "",
+    //   "prefill": {
+    //     "contact": "${widget.cart?.ccontact ?? "081111111111"}",
+    //     "email":
+    //         "${widget.cart?.cemail ?? widget.user02?.item_Email.toString()}"
+    //   },
+    //   "external": {
+    //     "wallets": ["paytm"]
+    //   }
+    // };
+    print("Hello : ${user_global.item_Email}");
     var options = {
       "key": "rzp_test_5YplbLeCMxKCEl",
-      "amount":
-          widget.cart?.cuang ?? widget.totaluang ?? widget.topup ?? 0 * 100,
-      "name": widget.cart?.cname ?? "",
-      "description": widget.cart?.cdesciption ?? "",
+      "amount": a * 100,
+      "name": widget.cart?.cname ?? user_global.item_Nama,
+      "description": widget.cart?.cdesciption ?? user_global.item_alamat,
       "prefill": {
-        "contact": "${widget.cart?.ccontact ?? "081111111111"}",
-        "email":
-            "${widget.cart?.cemail ?? widget.user02?.item_Email.toString()}"
+        "contact": "${user_global.item_noHP}",
+        "email": "${user_global.item_Email}"
       },
       "external": {
         "wallets": ["paytm"]
@@ -100,28 +114,54 @@ class _PembayaranState extends State<Pembayaran> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print('Success Response: $response');
+    int saldoawal = 0;
     if (widget.user02 != null && a != null) {
+      saldoawal = int.parse(widget.user02!.item_Saldo);
       int b = int.parse(widget.user02!.item_Saldo);
       widget.user02!.item_Saldo = (a + b).toString();
       Database.ubahData(user01: widget.user02!);
     } else if (widget.cart != null) {
+      saldoawal = int.parse(user_global.item_Saldo);
       Database_user.DeleteData(
           name_user01: widget.cart!.cname.toString(),
           email_user01: widget.cart!.cemail.toString());
+      int b = int.parse(user_global.item_Saldo);
+      b = b - widget.cart!.cuang;
+
+      user_global.item_Saldo = b.toString();
+      Database.ubahData(user01: user_global);
+
+      print("Global Saldo ${user_global.item_Saldo}");
+
+      //detele saldo
     } else {
+      saldoawal = int.parse(user_global.item_Saldo);
       for (int i = 0; i < widget.cart_list!.length; i++) {
         Database_user.DeleteData(
             email_user01: user.email.toString(),
             name_user01: widget.cart_list![i].cname);
-        cart_gambar.clear();
-        cart_nama.clear();
+        int b = int.parse(user_global.item_Saldo);
+        b = b - widget.cart_list![i].cuang;
+
+        user_global.item_Saldo = b.toString();
+        //delete saldo
       }
+      cart_gambar.clear();
+      Database.ubahData(user01: user_global);
+      cart_nama.clear();
     }
     final snackBar = SnackBar(
-      content: const Text('Yay! A SnackBar!'),
+      content: Text(
+          'Pembayaran Berhasil!, Sisa Saldo Anda ${user_global.item_Saldo}'),
       action: SnackBarAction(
         label: 'Undo',
         onPressed: () {
+          user_global.item_Saldo = saldoawal.toString();
+
+          Database.ubahData(user01: user_global);
+          final snakbar2 = SnackBar(content: Text("Oke, berhasil di Undo"));
+
+          ScaffoldMessenger.of(context).showSnackBar(snakbar2);
           // Some code to undo the change.
         },
       ),
