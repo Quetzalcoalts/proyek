@@ -425,9 +425,9 @@ class _MyAppState extends State<MyApp> {
       'X-RapidAPI-Key': '15944e2e9amshcd61c9da0ef21d9p1dfa39jsn528344bcd853'
     });
     var items = await json.decode(response.body)['feed'];
-    //setState(() {
-    nama = items;
-    //});
+    setState(() {
+      nama = items;
+    });
   }
 
   Convert(var a) {
