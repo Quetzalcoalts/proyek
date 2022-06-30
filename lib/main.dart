@@ -434,7 +434,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Convert(var a) {
-    var b = double.parse(a).round();
+    var b = double.parse(a).toStringAsFixed(1);
     return b.toString();
   }
 

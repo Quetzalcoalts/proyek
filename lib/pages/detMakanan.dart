@@ -38,7 +38,7 @@ class _detMakananState extends State<detMakanan> {
   }
 
   Convert(var a) {
-    var b = double.parse(a).round();
+    var b = double.parse(a).toStringAsFixed(1);
     return b.toString();
   }
 
