@@ -28,7 +28,6 @@ class Filter extends StatefulWidget {
 
 class _FilterState extends State<Filter> {
   chara? _selected = chara.button1;
-  int selectedButton = 1;
 
   void checking3() {
     if (rat3.length >= 1) {
