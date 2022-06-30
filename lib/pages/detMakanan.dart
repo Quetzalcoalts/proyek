@@ -182,6 +182,7 @@ class _detMakananState extends State<detMakanan> {
                           Column(
                             children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
                                     margin: EdgeInsets.fromLTRB(5, 8, 0, 0),
@@ -238,59 +239,73 @@ class _detMakananState extends State<detMakanan> {
                                 padding: EdgeInsets.fromLTRB(5, 25, 0, 0),
                                 child: Row(
                                   children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[300],
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                      width: 110,
-                                      height: 50,
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            final a = keperluan_cart(
-                                              cuang: harga,
-                                              cname: widget.id![widget.item_id!]
-                                                  ['display']['displayName'],
-                                              cdesciption: widget.id![widget
-                                                                  .item_id!]
-                                                              ['content']
-                                                          ['description'] !=
-                                                      null
-                                                  ? widget.id![widget.item_id!]
-                                                          ['content']
-                                                      ['description']['text']
-                                                  : 'Testing',
-                                              cemail: user.email.toString(),
-                                              ccontact: jumlah.toString(),
-                                            );
-                                            print("add to cart firebase");
-                                            Database_user.tambahData(user01: a);
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return Cart(
-                                                  id: widget.id,
-                                                  item_id: widget.item_id);
-                                            }));
-                                          },
-                                          child: Icon(Icons.abc)),
+                                    Expanded(
+                                      flex: 5,
+                                      child: SizedBox(
+                                        width: 10,
+                                      ),
                                     ),
-                                    Container(
-                                      width: 20,
-                                      height: 50,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.greenAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                      width: 237,
-                                      height: 50,
-                                      child: FlatButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            "BUY NOW",
-                                            style: TextStyle(fontSize: 17),
+                                    Expanded(
+                                      flex: 4,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey[300],
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          width: 110,
+                                          height: 50,
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              final a = keperluan_cart(
+                                                cuang: harga,
+                                                cname: widget
+                                                        .id![widget.item_id!]
+                                                    ['display']['displayName'],
+                                                cdesciption: widget.id![widget
+                                                                    .item_id!]
+                                                                ['content']
+                                                            ['description'] !=
+                                                        null
+                                                    ? widget.id![
+                                                                widget.item_id!]
+                                                            ['content']
+                                                        ['description']['text']
+                                                    : 'Testing',
+                                                cemail: user.email.toString(),
+                                                ccontact: jumlah.toString(),
+                                              );
+                                              print("add to cart firebase");
+                                              Database_user.tambahData(
+                                                  user01: a);
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return Cart(
+                                                    id: widget.id,
+                                                    item_id: widget.item_id);
+                                              }));
+                                            },
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "BUY NOW",
+                                                  style:
+                                                      TextStyle(fontSize: 17),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ),
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors.blueAccent,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 30,
+                                                      vertical: 15),
+                                              textStyle:
+                                                  const TextStyle(fontSize: 20),
+                                            ),
                                           )),
                                     ),
                                   ],
