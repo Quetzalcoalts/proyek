@@ -37,6 +37,11 @@ class _detMakananState extends State<detMakanan> {
     listasli.add(widget.id);
   }
 
+  Convert(var a) {
+    var b = double.parse(a).round();
+    return b.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,7 +137,7 @@ class _detMakananState extends State<detMakanan> {
                                       color: Colors.yellow,
                                     ),
                                     Text(
-                                      "${widget.id![widget.item_id!]['content']['reviews'] != null ? widget.id![widget.item_id!]['content']['reviews']['averageRating'] == null ? "3" : widget.id![widget.item_id!]['content']['reviews']['averageRating'] : "3"}",
+                                      "${widget.id![widget.item_id!]['content']['reviews'] != null ? widget.id![widget.item_id!]['content']['reviews']['averageRating'] == null ? "3" : Convert(widget.id![widget.item_id!]['content']['reviews']['averageRating'].toString()) : "3"}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 16,

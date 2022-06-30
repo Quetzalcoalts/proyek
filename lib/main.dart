@@ -424,12 +424,13 @@ class _MyAppState extends State<MyApp> {
         "yummly2.p.rapidapi.com", "/feeds/list", {"limit": "15", "start": "3"});
     var response = await http.get(url, headers: {
       'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
-      'X-RapidAPI-Key': '53f044d9cdmshf265e6686f46e6fp1e9053jsn271b48445962'
+      'X-RapidAPI-Key': 'd6f69aeec2msh9243c83d76121e7p119cb3jsne030f81b320b'
     });
     var items = await json.decode(response.body)['feed'];
     setState(() {
       nama = items;
     });
+    print(nama);
   }
 
   Convert(var a) {
@@ -591,20 +592,7 @@ class _MyAppState extends State<MyApp> {
                                           Container(
                                               padding: EdgeInsets.fromLTRB(
                                                   0, 0, 8, 8),
-                                              child: Text(nama[index]['content']
-                                                          ['reviews'] !=
-                                                      null
-                                                  ? nama[index]['content']
-                                                                  ['reviews'][
-                                                              'averageRating'] ==
-                                                          null
-                                                      ? "3"
-                                                      : Convert(nama[index]
-                                                                      ['content']
-                                                                  ['reviews']
-                                                              ['averageRating']
-                                                          .toString())
-                                                  : "3")),
+                                              child: Text(nama[index]['content']['reviews'] != null ? nama[index]['content']['reviews']['averageRating'] ==null ? "3" : Convert(nama[index]['content']['reviews']['averageRating'].toString()): "3")),
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 85, 0, 0, 5),

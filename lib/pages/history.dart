@@ -23,9 +23,10 @@ class History extends StatefulWidget {
 class _HistoryState extends State<History> {
   final user = FirebaseAuth.instance.currentUser!;
   final int uang_harga = harga;
-  @override
-  void initState() {
-    super.initState();
+  
+  Convert(var a) {
+    var b = double.parse(a).round();
+    return b.toString();
   }
 
   @override
@@ -48,21 +49,54 @@ class _HistoryState extends State<History> {
                 }));
               },
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(8),
                 child: Column(
                   children: [
-                    Card(
-                      child: ListTile(
-                        leading: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minWidth: 44,
-                            minHeight: 44,
-                            maxWidth: 64,
-                            maxHeight: 64,
+                    Container(
+                      child: Card(
+                        child: ListTile(
+                          leading:Image.network(cart_gambarh[index], width: 70, height: 70,),
+                          title: Container(child: Text(cart_namah[index])),
+                          subtitle: Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.star, size: 18, color: Colors.yellow,),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 5),
+                                        child: Text(nama[index]['content']['reviews'] != null ? nama[index]['content']['reviews']['averageRating'] ==null ? "3" : Convert(nama[index]['content']['reviews']['averageRating'].toString()): "3"),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          child: Image.network(cart_gambarh[index], fit: BoxFit.cover),
+                          trailing: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40))),
+                          width: 38,
+                          height: 38,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    0, 10, 0, 0),
+                                child: Text(
+                                  "50K",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              )
+                            ],
+                          )),
                         ),
-                        title: Text(cart_namah[index]),
                       ),
                     ),
                   ]
