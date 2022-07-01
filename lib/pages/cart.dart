@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:proyekambw/navbar.dart';
 import 'package:proyekambw/services/dbservices.dart';
 import 'package:proyekambw/pages/detMakanan.dart';
 import 'package:proyekambw/pages/shopping_Payment.dart';
@@ -84,115 +85,152 @@ class _CartState extends State<Cart> {
           elevation: 0.8,
           backgroundColor: Color.fromARGB(255, 4, 162, 241),
         ),
-        body: ListView.builder(
-            itemCount: cart_nama.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return detMakanan(id: widget.id!, item_id: widget.item_id!);
-                  }));
-                },
-                child: SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Container(
-                                padding: EdgeInsets.all(8),
-                                color: Colors.white,
-                                height: 200,
-                                constraints:
-                                    BoxConstraints(maxWidth: double.infinity),
-                                child: Image.network(
-                                  cart_gambar[index],
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 4,
-                                  child: Container(
-                                      color: Colors.white,
-                                      width: 250,
-                                      margin: EdgeInsets.fromLTRB(10, 8, 0, 10),
-                                      child: Card(
-                                        elevation: 0,
-                                        child: Text(
-                                          cart_nama[index],
-                                          overflow: TextOverflow.visible,
-                                          maxLines: 4,
-                                        ),
-                                      )),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    height: 30,
-                                    width: 100,
-                                    color: Colors.blue,
-                                    margin: EdgeInsets.fromLTRB(10, 8, 8, 10),
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                          final db = keperluan_cart(
-                                              cuang: uang_harga,
-                                              cname: cart_nama[index],
-                                              cdesciption:
-                                                  user.email.toString(),
-                                              cemail: user.email.toString(),
-                                              ccontact: user.toString());
-                                          print("Ke Pembayaran");
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return Pembayaran(
-                                              cart: db,
-                                            );
-                                          }));
-                                        },
-                                        child: Text("Buy Now")),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Container(
-                                    height: 30,
-                                    width: 100,
-                                    color: Colors.blue,
-                                    margin: EdgeInsets.fromLTRB(10, 8, 8, 10),
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                          Database_user.DeleteData(
-                                              name_user01:
-                                                  cart_nama[index].toString(),
-                                              email_user01:
-                                                  user.email.toString());
-                                          print("Remove Cart in firebase");
-                                        },
-                                        child: Text("Remove")),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+        body: Column(
+          children: [
+            Expanded(
+              flex: 0,
+              child: Container(
+                padding: EdgeInsets.only(right: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return NavBar();
+                        }));
+                      },
+                      icon: Icon(Icons.home),
+                      label: Text("Home"),
                     ),
-                  ),
+                  ],
                 ),
-              );
-            }));
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: ListView.builder(
+                  itemCount: cart_nama.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return detMakanan(
+                              id: widget.id!, item_id: widget.item_id!);
+                        }));
+                      },
+                      child: SingleChildScrollView(
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 5,
+                                    child: Container(
+                                      padding: EdgeInsets.all(8),
+                                      color: Colors.white,
+                                      height: 200,
+                                      constraints: BoxConstraints(
+                                          maxWidth: double.infinity),
+                                      child: Image.network(
+                                        cart_gambar[index],
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: Container(
+                                            color: Colors.white,
+                                            width: 250,
+                                            margin: EdgeInsets.fromLTRB(
+                                                10, 8, 0, 10),
+                                            child: Card(
+                                              elevation: 0,
+                                              child: Text(
+                                                cart_nama[index],
+                                                overflow: TextOverflow.visible,
+                                                maxLines: 4,
+                                              ),
+                                            )),
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child: Container(
+                                          height: 30,
+                                          width: 100,
+                                          color: Colors.blue,
+                                          margin:
+                                              EdgeInsets.fromLTRB(10, 8, 8, 10),
+                                          child: ElevatedButton(
+                                              onPressed: () {
+                                                final db = keperluan_cart(
+                                                    cuang: uang_harga,
+                                                    cname: cart_nama[index],
+                                                    cdesciption:
+                                                        user.email.toString(),
+                                                    cemail:
+                                                        user.email.toString(),
+                                                    ccontact: user.toString());
+                                                print("Ke Pembayaran");
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return Pembayaran(
+                                                    cart: db,
+                                                  );
+                                                }));
+                                              },
+                                              child: Text("Buy Now")),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child: Container(
+                                          height: 30,
+                                          width: 100,
+                                          color: Colors.blue,
+                                          margin:
+                                              EdgeInsets.fromLTRB(10, 8, 8, 10),
+                                          child: ElevatedButton(
+                                              onPressed: () {
+                                                Database_user.DeleteData(
+                                                    name_user01:
+                                                        cart_nama[index]
+                                                            .toString(),
+                                                    email_user01:
+                                                        user.email.toString());
+                                                print(
+                                                    "Remove Cart in firebase");
+                                              },
+                                              child: Text("Remove")),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ));
   }
 }
