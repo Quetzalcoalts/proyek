@@ -11,6 +11,7 @@ import 'package:proyekambw/pages/like.dart';
 import 'package:proyekambw/services/dbservices.dart';
 import '../main.dart';
 import 'cart.dart';
+import 'like.dart';
 
 int jumlah = 1;
 int harga = 50;
@@ -30,6 +31,15 @@ class _detMakananState extends State<detMakanan> {
   void initState() {
     super.initState();
     refresh();
+  }
+
+  void removed(int index1) {
+    for (int i = 0; i < namal.length; i++) {
+      if (index1 == i) {
+        namal.removeAt(index1);
+        gambarl.removeAt(index1);
+      }
+    }
   }
 
   void refresh() {
@@ -243,16 +253,22 @@ class _detMakananState extends State<detMakanan> {
                                     child: ElevatedButton.icon(
                                         onPressed: () {
                                           setState(() {
-                                            if(x == false){
+                                            if (x == false) {
                                               x = true;
-                                              namal.add(widget.id![widget.item_id!]['display']['displayName']);
-                                              gambarl.add(widget.id![widget.item_id!]['display']['images'][0]);
-                                            }
-                                            else if(x == true){
+                                              namal.add(widget
+                                                      .id![widget.item_id!]
+                                                  ['display']['displayName']);
+                                              gambarl.add(
+                                                  widget.id![widget.item_id!]
+                                                      ['display']['images'][0]);
+                                            } else if (x == true) {
                                               x = false;
+                                              removed(widget.item_id!);
                                             }
                                           });
-                                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
                                             return Like();
                                           }));
                                         },
