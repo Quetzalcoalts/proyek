@@ -93,16 +93,21 @@ class _LikeState extends State<Like> {
                               child: Column(
                                 children: [
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Text(
-                                      "50K",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                  )
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 10, 0, 0),
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        child: ElevatedButton.icon(
+                                            onPressed: () {
+                                              setState(() {
+                                                namal.removeAt(index);
+                                                gambarl.removeAt(index);
+                                              });
+                                            },
+                                            icon: Icon(Icons.error),
+                                            label: Text("Hapus")),
+                                      ))
                                 ],
                               )),
                         ),

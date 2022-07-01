@@ -15,6 +15,7 @@ import 'like.dart';
 
 int jumlah = 1;
 int harga = 50;
+List like = [];
 
 class detMakanan extends StatefulWidget {
   final List? id;
@@ -36,6 +37,7 @@ class _detMakananState extends State<detMakanan> {
   void removed(int index1) {
     for (int i = 0; i < namal.length; i++) {
       if (index1 == i) {
+        print("Hellosssss ${namal[i]}");
         namal.removeAt(index1);
         gambarl.removeAt(index1);
       }
