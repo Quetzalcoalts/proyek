@@ -24,6 +24,7 @@ class detMakanan extends StatefulWidget {
 
 class _detMakananState extends State<detMakanan> {
   final user = FirebaseAuth.instance.currentUser!;
+  bool x = false;
   @override
   void initState() {
     super.initState();
@@ -184,51 +185,80 @@ class _detMakananState extends State<detMakanan> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(5, 8, 0, 0),
-                                    width: 40,
-                                    height: 25,
-                                    child: OutlineButton(
-                                      // ignore: prefer_const_constructors
-                                      borderSide: BorderSide(
-                                          width: 0.5, color: Colors.grey),
-                                      onPressed: () {
-                                        setState(() {
-                                          if (jumlah > 0) {
-                                            jumlah--;
-                                          }
-                                          harga = 50 * jumlah;
-                                        });
-                                      },
-                                      child: Icon(Icons.remove),
-                                    ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.fromLTRB(5, 8, 0, 0),
+                                        width: 40,
+                                        height: 25,
+                                        child: OutlineButton(
+                                          // ignore: prefer_const_constructors
+                                          borderSide: BorderSide(
+                                              width: 0.5, color: Colors.grey),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (jumlah > 0) {
+                                                jumlah--;
+                                              }
+                                              harga = 50 * jumlah;
+                                            });
+                                          },
+                                          child: Icon(Icons.remove),
+                                        ),
+                                      ),
+                                      Container(
+                                          margin:
+                                              EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                          child: Text(jumlah.toString())),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                        width: 40,
+                                        height: 25,
+                                        child: OutlineButton(
+                                          // ignore: prefer_const_constructors
+                                          borderSide: BorderSide(
+                                              width: 0.5, color: Colors.grey),
+                                          onPressed: () {
+                                            setState(() {
+                                              jumlah++;
+                                            });
+                                            harga = 50 * jumlah;
+                                          },
+                                          child: Icon(Icons.add),
+                                        ),
+                                      ),
+                                      Container(
+                                          margin:
+                                              EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                          child: Text(
+                                            "${harga.toString()}\$",
+                                            style: TextStyle(fontSize: 17),
+                                          )),
+                                    ],
                                   ),
                                   Container(
-                                      margin: EdgeInsets.fromLTRB(10, 8, 0, 0),
-                                      child: Text(jumlah.toString())),
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(10, 8, 0, 0),
-                                    width: 40,
-                                    height: 25,
-                                    child: OutlineButton(
-                                      // ignore: prefer_const_constructors
-                                      borderSide: BorderSide(
-                                          width: 0.5, color: Colors.grey),
-                                      onPressed: () {
-                                        setState(() {
-                                          jumlah++;
-                                        });
-                                        harga = 50 * jumlah;
-                                      },
-                                      child: Icon(Icons.add),
-                                    ),
-                                  ),
-                                  Container(
-                                      margin: EdgeInsets.fromLTRB(10, 8, 0, 0),
-                                      child: Text(
-                                        "${harga.toString()}\$",
-                                        style: TextStyle(fontSize: 17),
-                                      )),
+                                    padding: EdgeInsets.only(left: 40),
+                                    child: ElevatedButton.icon(
+                                        onPressed: () {
+                                          setState(() {
+                                            if (x == false) {
+                                              x = true;
+                                            } else {
+                                              x == false;
+                                            }
+                                          });
+                                        },
+                                        icon: Icon(
+                                          Icons.thumb_up,
+                                          color: x == false
+                                              ? x == true
+                                                  ? Colors.black
+                                                  : Colors.blue
+                                              : Colors.white,
+                                        ),
+                                        label: Text("")),
+                                  )
                                 ],
                               ),
                             ],

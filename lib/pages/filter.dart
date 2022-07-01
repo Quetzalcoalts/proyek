@@ -117,13 +117,17 @@ class _FilterState extends State<Filter> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: 30,
-                  height: 30,
-                  padding: EdgeInsets.fromLTRB(8, 3, 0, 0),
-                  child: IconButton(onPressed: (){
-                    Navigator.of(context).pop();
-                  }, icon: Icon(Icons.arrow_back_ios, size: 13,))
-                ),
+                    width: 30,
+                    height: 30,
+                    padding: EdgeInsets.fromLTRB(8, 3, 0, 0),
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          size: 13,
+                        ))),
                 Container(
                   padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
                   child: Row(
@@ -174,7 +178,7 @@ class _FilterState extends State<Filter> {
                           });
                         },
                       ),
-                      Text("Rating 4"),
+                      Text("Rating 5"),
                     ],
                   ),
                 ),
