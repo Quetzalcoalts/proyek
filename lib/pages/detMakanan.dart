@@ -242,19 +242,18 @@ class _detMakananState extends State<detMakanan> {
                                     child: ElevatedButton.icon(
                                         onPressed: () {
                                           setState(() {
-                                            if (x == false) {
+                                            if(x == false){
                                               x = true;
-                                            } else {
-                                              x == false;
+                                            }
+                                            else if(x == true){
+                                              x = false;
                                             }
                                           });
                                         },
                                         icon: Icon(
                                           Icons.thumb_up,
                                           color: x == false
-                                              ? x == true
-                                                  ? Colors.black
-                                                  : Colors.blue
+                                              ? Colors.black
                                               : Colors.white,
                                         ),
                                         label: Text("")),
