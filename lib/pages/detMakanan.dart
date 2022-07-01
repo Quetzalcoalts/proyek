@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:proyekambw/pages/cart.dart';
 import 'package:proyekambw/pages/history.dart';
 import 'package:proyekambw/class/testing_pembayaran.dart';
+import 'package:proyekambw/pages/like.dart';
 import 'package:proyekambw/services/dbservices.dart';
 import '../main.dart';
 import 'cart.dart';
@@ -244,11 +245,16 @@ class _detMakananState extends State<detMakanan> {
                                           setState(() {
                                             if(x == false){
                                               x = true;
+                                              namal.add(widget.id![widget.item_id!]['display']['displayName']);
+                                              gambarl.add(widget.id![widget.item_id!]['display']['images'][0]);
                                             }
                                             else if(x == true){
                                               x = false;
                                             }
                                           });
+                                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                                            return Like();
+                                          }));
                                         },
                                         icon: Icon(
                                           Icons.thumb_up,
