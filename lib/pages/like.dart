@@ -28,7 +28,7 @@ class _LikeState extends State<Like> {
           backgroundColor: Color.fromARGB(255, 4, 162, 241),
           title: Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Text("History Page")),
+              child: Text("Like Page")),
         ),
         body: ListView.builder(
             itemCount: namal.length,
@@ -92,22 +92,20 @@ class _LikeState extends State<Like> {
                               height: 38,
                               child: Column(
                                 children: [
-                                  Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 10, 0, 0),
-                                      child: Container(
-                                        width: 20,
-                                        height: 20,
-                                        child: ElevatedButton.icon(
-                                            onPressed: () {
-                                              setState(() {
-                                                namal.removeAt(index);
-                                                gambarl.removeAt(index);
-                                              });
-                                            },
-                                            icon: Icon(Icons.error),
-                                            label: Text("Hapus")),
-                                      ))
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 38,
+                                        height: 38,
+                                        child: IconButton(onPressed: (){
+                                          setState(() {
+                                            namal.removeAt(index);
+                                            gambarl.removeAt(index);
+                                          });
+                                        }, icon: Icon(Icons.delete, color: Colors.black,))
+                                      ),
+                                    ],
+                                  )
                                 ],
                               )),
                         ),

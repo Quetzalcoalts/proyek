@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:proyekambw/pages/like.dart';
 import 'package:proyekambw/widget/RefreshWidget.dart';
 import 'package:proyekambw/navbar.dart';
 import 'package:proyekambw/pages/cart_firebase.dart';
@@ -437,6 +438,61 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 flex: 5,
                                                 child: Text(
                                                   'Cart',
+                                                  style:
+                                                      TextStyle(fontSize: 16),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const Expanded(
+                                          flex: 1,
+                                          child: Icon(
+                                            Icons.navigate_next,
+                                            size: 20.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    onPrimary: Colors.blue,
+                                    shadowColor: Colors.blueAccent,
+                                    elevation: 5),
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return Like();
+                                  }));
+                                },
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: Row(
+                                            children: const [
+                                              Expanded(
+                                                flex: 1,
+                                                child: Icon(
+                                                  Icons.thumb_up_sharp,
+                                                  size: 20.0,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 5,
+                                                child: Text(
+                                                  'Like',
                                                   style:
                                                       TextStyle(fontSize: 16),
                                                 ),

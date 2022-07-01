@@ -268,17 +268,12 @@ class _detMakananState extends State<detMakanan> {
                                               removed(widget.item_id!);
                                             }
                                           });
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return Like();
-                                          }));
                                         },
                                         icon: Icon(
                                           Icons.thumb_up,
                                           color: x == false
                                               ? Colors.black
-                                              : Colors.white,
+                                              : Colors.blue,
                                         ),
                                         label: Text("")),
                                   )
