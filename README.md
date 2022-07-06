@@ -16,4 +16,4 @@ Payment
 
 Widget yang akan digunakan : List.Builder, SnackBar, Dissmissable, Expanded, Elevated Button, Card, Future, Refresh Indicator, Stream Builder, bottom navbar, Navigator,SingleChildScrollView,   
 Selengkapnya (refrensi + detail) : https://docs.google.com/document/d/1d6hGIqWKInOYiaI4Vk-hPqYaPBIMBZjwqHJBJBO14ME/edit?usp=sharing
-Video : https://drive.google.com/file/d/1_eZxMl5DM82QBwd6BM9KVfAr8gPZdD-w/view?usp=sharing
+Video : https://drive.google.com/file/d/1UlYyeuruFeo5E_-H1cPmzIXzjDMy_O-n/view?usp=sharing
